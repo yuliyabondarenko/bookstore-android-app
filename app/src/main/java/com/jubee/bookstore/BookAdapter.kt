@@ -3,27 +3,28 @@ package com.jubee.bookstore
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.animal_list_item.view.*
+import com.jubee.bookstore.model.BookModel
+import kotlinx.android.synthetic.main.book_list_item.view.*
 
-public class AnimalAdapter(private val items: ArrayList<String>) :
+public class BookAdapter(private val items: List<BookModel>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemCount() = items.size
 
-    // Inflates the item views
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return object : RecyclerView.ViewHolder(
             LayoutInflater.from(parent.context).inflate(
-                R.layout.animal_list_item,
+                R.layout.book_list_item,
                 parent,
                 false
             )
         ) {}
     }
 
-    // Binds each animal in the ArrayList to a view
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        holder.itemView.tv_animal_type?.text = items[position]
+        holder.itemView.bookName?.text = items[position].name
+        holder.itemView.bookPrice?.text = items[position].price.toString()
+        holder.itemView.bookAbsent?.text = items[position].absent.toString()
     }
 }
 
