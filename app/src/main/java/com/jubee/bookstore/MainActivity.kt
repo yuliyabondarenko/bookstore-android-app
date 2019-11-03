@@ -7,7 +7,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    val animals: ArrayList<String> = ArrayList()
+    private val animals: ArrayList<String> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -15,12 +15,12 @@ class MainActivity : AppCompatActivity() {
 
         addAnimals()
 
-        rv_animal_list.layoutManager = GridLayoutManager(this, 2)
+        animalRecyclerView.layoutManager = GridLayoutManager(this, 2)
 
-        rv_animal_list.adapter = AnimalAdapter(animals)
+        animalRecyclerView.adapter = AnimalAdapter(animals)
     }
 
-    fun addAnimals() {
+    private fun addAnimals() {
         animals.add("dog")
         animals.add("cat")
         animals.add("owl")
