@@ -3,10 +3,10 @@ package com.jubee.bookstore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
-import com.jubee.bookstore.model.BookModel
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.RecyclerView
 import com.jubee.bookstore.databinding.BookListItemBinding
+import com.jubee.bookstore.model.BookModel
 
 
 public class BookAdapter(private val items: List<BookModel>) :
