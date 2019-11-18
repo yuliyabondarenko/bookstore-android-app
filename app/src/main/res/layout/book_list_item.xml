@@ -3,6 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
+        <import type="android.view.View" />
+
         <variable
             name="book"
             type="com.jubee.bookstore.model.BookModel" />
@@ -27,6 +30,7 @@
                 android:layout_height="wrap_content"
                 android:padding="20dp"
                 android:text="@{book.name}"
+                android:textAlignment="center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -37,11 +41,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:contentDescription="@string/book_image_description"
+                app:imageUrl="@{book.photo}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/bookName"
-                app:imageUrl="@{book.photo}" />
+                app:layout_constraintTop_toBottomOf="@+id/bookName" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline"
@@ -54,23 +58,45 @@
                 android:id="@+id/bookPrice"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="@color/colorAccent"
+                android:background="@android:color/holo_orange_light"
                 android:padding="5dp"
-                android:text="@{String.valueOf(book.price)}"
-                app:layout_constraintTop_toBottomOf="@id/bookImage"
-                app:layout_constraintStart_toEndOf="@id/guideline"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                android:layout_margin="5dp"
+                android:text="@{'$' +String.valueOf(book.price)}"
+                android:textAlignment="center"
+                app:layout_constraintBottom_toBottomOf="@+id/addButton"
+                app:layout_constraintEnd_toStartOf="@+id/guideline"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/addButton" />
 
             <TextView
                 android:id="@+id/bookAbsent"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:text="@{String.valueOf(book.absent)}"
-                app:layout_constraintEnd_toEndOf="@+id/guideline"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/bookImage" />
+                android:layout_margin="5dp"
+                android:background="@android:color/darker_gray"
+                android:text="@string/absent"
+                android:textAlignment="center"
+                android:visibility="@{book.absent ? View.GONE : View.VISIBLE}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/guideline"
+                app:layout_constraintTop_toBottomOf="@id/bookImage"/>
+
+            <Button
+                android:id="@+id/addButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/add_to_cart"
+                android:textAlignment="center"
+                android:layout_margin="5dp"
+                android:background="@color/colorAccent"
+                android:visibility="@{book.absent ? View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/guideline"
+                app:layout_constraintTop_toBottomOf="@id/bookImage" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
