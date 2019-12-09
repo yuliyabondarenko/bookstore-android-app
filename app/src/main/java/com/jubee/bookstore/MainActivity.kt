@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
 
         bookRecyclerView.layoutManager = GridLayoutManager(this, 2)
 
-        NetworkClient.getBookApiService().getBookList(3, 1, "price,desc").enqueue(object: Callback<BookCollectionApiResponse> {
+        NetworkClient.getBookApiService().getBookList(null, null, "price,desc").enqueue(object: Callback<BookCollectionApiResponse> {
             override fun onFailure(call: Call<BookCollectionApiResponse>, t: Throwable) {
                 TODO("not implemented")
             }
