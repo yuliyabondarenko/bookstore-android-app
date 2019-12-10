@@ -9,7 +9,10 @@ import com.jubee.bookstore.databinding.BookListItemBinding
 import com.jubee.bookstore.model.BookModel
 
 
-public class BookAdapter(private val items: List<BookModel>) :
+public class BookAdapter(
+    private val items: List<BookModel>,
+    val clickListener: (BookModel) -> Unit
+) :
     RecyclerView.Adapter<BookAdapter.BookItemViewHolder>() {
 
     override fun getItemCount() = items.size
@@ -20,8 +23,10 @@ public class BookAdapter(private val items: List<BookModel>) :
         return BookItemViewHolder(binding.root)
     }
 
-    override fun onBindViewHolder(holder:  BookItemViewHolder, position: Int) {
-        holder.binding?.book=items[position]
+    override fun onBindViewHolder(holder: BookItemViewHolder, position: Int) {
+        val bookItem = items[position]
+        holder.binding?.book = bookItem
+        holder.itemView.setOnClickListener { clickListener(bookItem) }
     }
 
     inner class BookItemViewHolder(v: View) : RecyclerView.ViewHolder(v) {
