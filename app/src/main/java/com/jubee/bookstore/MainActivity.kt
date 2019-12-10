@@ -1,8 +1,8 @@
 package com.jubee.bookstore
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import com.jubee.bookstore.api.BookCollectionApiResponse
 import com.jubee.bookstore.model.BookModel
@@ -11,6 +11,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
+const val BOOK_ID_EXTRA = "com.jubee.bookstore.BOOK_ID_EXTRA"
 
 class MainActivity : AppCompatActivity() {
 
@@ -41,7 +43,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun bookItemClicked(bookItem: BookModel) {
-        Toast.makeText(this, "Clicked: ${bookItem.name}", Toast.LENGTH_LONG).show()
+        val intent = Intent(this, BookDetailsActivity::class.java).apply {
+            putExtra(BOOK_ID_EXTRA, bookItem.id)
+        }
+        startActivity(intent)
     }
 
 }
