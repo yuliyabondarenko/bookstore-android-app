@@ -2,6 +2,8 @@ package com.jubee.bookstore
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.databinding.DataBindingUtil.setContentView
+import com.jubee.bookstore.databinding.ActivityBookDetailsBinding
 import com.jubee.bookstore.model.BookModel
 import com.jubee.bookstore.service.NetworkClient
 import kotlinx.android.synthetic.main.activity_book_details.*
@@ -10,10 +12,11 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class BookDetailsActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityBookDetailsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_book_details)
+        binding = setContentView(this, R.layout.activity_book_details)
 
         val bookId = intent.getLongExtra(BOOK_ID_EXTRA, 0)
 
@@ -23,14 +26,13 @@ class BookDetailsActivity : AppCompatActivity() {
                     call: Call<BookModel>,
                     response: Response<BookModel>
                 ) {
-
                     val bookModel = response.body()
-
-                    bookDetailsText.text = bookModel.toString()
+                    binding.book = bookModel
                 }
 
                 override fun onFailure(call: Call<BookModel>, t: Throwable) {
-                    bookDetailsText.text = getString(R.string.common_error_msg) + t.localizedMessage;
+                    bookDetailsText.text =
+                        getString(R.string.common_error_msg) + t.localizedMessage;
                 }
 
             })
