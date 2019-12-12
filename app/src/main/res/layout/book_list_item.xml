@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -14,38 +15,39 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="8dp"
         android:background="@color/colorPrimary"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:layout_height="300dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="5dp">
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/bookName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
+                android:padding="8dp"
                 android:text="@{book.name}"
                 android:textAlignment="center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="dorian gray" />
 
             <ImageView
                 android:id="@+id/bookImage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="200dp"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/book_image_description"
-                android:padding="5dp"
-                app:imageUrl="@{book.photo}"
+                android:paddingBottom="8dp"
                 app:layout_constraintBottom_toTopOf="@id/addButton"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/bookName" />
+                app:layout_constraintTop_toBottomOf="@+id/bookName"
+                tools:src="@drawable/ic_launcher_background"/>
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline"
@@ -54,38 +56,50 @@
                 android:orientation="vertical"
                 app:layout_constraintGuide_percent="0.5" />
 
-            <TextView
-                android:id="@+id/bookPrice"
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/horizontalGuideline95"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.95" />
+
+            <TextView
+                android:id="@+id/bookPrice"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 android:background="@android:color/holo_orange_light"
-                android:padding="5dp"
+                android:padding="8dp"
                 android:text="@{'$' +String.valueOf(book.price)}"
                 android:textAlignment="center"
                 app:layout_constraintBottom_toBottomOf="@+id/addButton"
                 app:layout_constraintEnd_toStartOf="@+id/guideline"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/addButton" />
+                app:layout_constraintTop_toTopOf="@+id/addButton"
+                tools:text="$56.98" />
 
             <Button
                 android:id="@+id/addButton"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:visibility="@{book.absent ? View.VISIBLE : View.INVISIBLE}"
                 android:background="@color/colorAccent"
                 android:text="@string/add_to_cart"
                 android:textAlignment="center"
-                android:visibility="@{book.absent ? View.VISIBLE : View.INVISIBLE}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/guideline" />
-
+                app:layout_constraintStart_toEndOf="@+id/guideline" />
 
             <TextView
                 android:id="@+id/bookAbsent"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 android:background="@android:color/darker_gray"
-                android:padding="5dp"
+                android:padding="8dp"
                 android:text="@string/absent"
                 android:textAlignment="center"
                 android:visibility="@{book.absent ? View.GONE : View.VISIBLE}"

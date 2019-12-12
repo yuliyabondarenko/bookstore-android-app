@@ -11,6 +11,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import androidx.recyclerview.widget.DefaultItemAnimator
 
 const val BOOK_ID_EXTRA = "com.jubee.bookstore.BOOK_ID_EXTRA"
 
@@ -21,6 +22,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         bookRecyclerView.layoutManager = GridLayoutManager(this, 2)
+        bookRecyclerView.itemAnimator = DefaultItemAnimator()
 
         NetworkClient.getBookApiService().getBookList(null, null, "price,desc")
             .enqueue(object : Callback<BookCollectionApiResponse> {
