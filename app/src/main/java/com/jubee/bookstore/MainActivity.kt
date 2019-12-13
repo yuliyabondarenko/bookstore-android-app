@@ -1,8 +1,9 @@
 package com.jubee.bookstore
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import com.jubee.bookstore.api.BookCollectionApiResponse
 import com.jubee.bookstore.model.BookModel
@@ -11,7 +12,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import androidx.recyclerview.widget.DefaultItemAnimator
 
 const val BOOK_ID_EXTRA = "com.jubee.bookstore.BOOK_ID_EXTRA"
 
@@ -20,6 +20,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        lifecycle.addObserver(MyLifecycleObserver())
 
         bookRecyclerView.layoutManager = GridLayoutManager(this, 2)
         bookRecyclerView.itemAnimator = DefaultItemAnimator()
@@ -36,8 +38,8 @@ class MainActivity : AppCompatActivity() {
                 ) {
                     val body = response.body()!!
                     bookRecyclerView.adapter = BookAdapter(
-                        body._embedded.books,
-                        { bookItem: BookModel -> bookItemClicked(bookItem) })
+                        body._embedded.books
+                    ) { bookItem: BookModel -> bookItemClicked(bookItem) }
                 }
 
             })
