@@ -15,6 +15,8 @@ const val BOOK_ID_EXTRA = "com.jubee.bookstore.BOOK_ID_EXTRA"
 
 class MainActivity : AppCompatActivity() {
 
+    private val adapter = BookAdapter { bookItem: BookModel -> bookItemClicked(bookItem) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -23,11 +25,11 @@ class MainActivity : AppCompatActivity() {
 
         bookRecyclerView.layoutManager = GridLayoutManager(this, 2)
         bookRecyclerView.itemAnimator = DefaultItemAnimator()
+        bookRecyclerView.adapter = adapter
 
         val booksViewModel = ViewModelProviders.of(this)[BooksViewModel::class.java]
         booksViewModel.getBooks().observe(this, Observer<List<BookModel>> { books ->
-            bookRecyclerView.adapter =
-                BookAdapter(books) { bookItem: BookModel -> bookItemClicked(bookItem) }
+            adapter.data = books.toMutableList()
         })
     }
 

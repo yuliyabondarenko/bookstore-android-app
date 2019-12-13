@@ -10,12 +10,17 @@ import com.jubee.bookstore.model.BookModel
 
 
 public class BookAdapter(
-    private val items: List<BookModel>,
     val clickListener: (BookModel) -> Unit
 ) :
     RecyclerView.Adapter<BookAdapter.BookItemViewHolder>() {
 
-    override fun getItemCount() = items.size
+    var data = mutableListOf<BookModel>()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
+
+    override fun getItemCount() = data.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookItemViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -24,7 +29,7 @@ public class BookAdapter(
     }
 
     override fun onBindViewHolder(holder: BookItemViewHolder, position: Int) {
-        val bookItem = items[position]
+        val bookItem = data[position]
         holder.binding.book = bookItem
         Glide.with(holder.itemView).load(bookItem.photo).into(holder.binding.bookImage)
         holder.itemView.setOnClickListener { clickListener(bookItem) }
