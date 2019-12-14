@@ -28,9 +28,15 @@ class MainActivity : AppCompatActivity() {
         bookRecyclerView.adapter = adapter
 
         val booksViewModel = ViewModelProviders.of(this)[BooksViewModel::class.java]
-        booksViewModel.getBooks().observe(this, Observer<List<BookModel>> { books ->
+        booksViewModel.booksLiveData.observe(this, Observer<List<BookModel>> { books ->
             adapter.data = books.toMutableList()
         })
+
+        booksViewModel.isRefreshingLiveData.observe(this, Observer<Boolean> { isRefreshing ->
+            swipeRefresh.isRefreshing = isRefreshing
+        })
+
+        swipeRefresh.setOnRefreshListener { booksViewModel.refresh() }
     }
 
     private fun bookItemClicked(bookItem: BookModel) {

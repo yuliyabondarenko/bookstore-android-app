@@ -12,20 +12,26 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class BooksViewModel : ViewModel() {
-    private val books: MutableLiveData<List<BookModel>> by lazy {
+    val booksLiveData: LiveData<List<BookModel>>
+        get() = _booksLiveData
+
+    val isRefreshingLiveData: LiveData<Boolean>
+        get() = _isRefreshingLiveData
+
+    private val _booksLiveData: MutableLiveData<List<BookModel>> by lazy {
         MutableLiveData<List<BookModel>>().also {
             loadBooks()
         }
     }
 
-    public fun getBooks(): LiveData<List<BookModel>> {
-        return books
-    }
+    private val _isRefreshingLiveData: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
 
     private fun loadBooks() {
+        _isRefreshingLiveData.value = true
         NetworkClient.getBookApiService().getBookList(null, null, "price,desc")
             .enqueue(object : Callback<BookCollectionApiResponse> {
                 override fun onFailure(call: Call<BookCollectionApiResponse>, t: Throwable) {
+                    _isRefreshingLiveData.value = false
                     Log.e("JB/error", "Load books failed", t)
                 }
 
@@ -34,9 +40,14 @@ class BooksViewModel : ViewModel() {
                     response: Response<BookCollectionApiResponse>
                 ) {
                     val body = response.body()!!
-                    books.value = body._embedded.books
+                    _booksLiveData.value = body._embedded.books
+                    _isRefreshingLiveData.value = false
                     Log.i("JB/info", "Books have been loaded from server")
                 }
             })
+    }
+
+    fun refresh() {
+        loadBooks()
     }
 }
