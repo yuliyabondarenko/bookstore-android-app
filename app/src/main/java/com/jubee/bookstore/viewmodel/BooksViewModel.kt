@@ -24,7 +24,7 @@ class BooksViewModel : ViewModel() {
         }
     }
 
-    private val _isRefreshingLiveData: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    private val _isRefreshingLiveData: MutableLiveData<Boolean> = MutableLiveData()
 
     private fun loadBooks() {
         _isRefreshingLiveData.value = true
