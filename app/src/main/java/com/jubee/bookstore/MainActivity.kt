@@ -7,7 +7,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
-import com.jubee.bookstore.model.BookModel
+import com.jubee.bookstore.dto.BookDto
 import com.jubee.bookstore.viewmodel.BooksViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -15,7 +15,7 @@ const val BOOK_ID_EXTRA = "com.jubee.bookstore.BOOK_ID_EXTRA"
 
 class MainActivity : AppCompatActivity() {
 
-    private val adapter = BookAdapter { bookItem: BookModel -> bookItemClicked(bookItem) }
+    private val adapter = BookAdapter { bookItem: BookDto -> bookItemClicked(bookItem) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         bookRecyclerView.adapter = adapter
 
         val booksViewModel = ViewModelProviders.of(this)[BooksViewModel::class.java]
-        booksViewModel.booksLiveData.observe(this, Observer<List<BookModel>> { books ->
+        booksViewModel.booksLiveData.observe(this, Observer<List<BookDto>> { books ->
             adapter.data = books.toMutableList()
         })
 
@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         swipeRefresh.setOnRefreshListener { booksViewModel.refresh() }
     }
 
-    private fun bookItemClicked(bookItem: BookModel) {
+    private fun bookItemClicked(bookItem: BookDto) {
         val intent = Intent(this, BookDetailsActivity::class.java).apply {
             putExtra(BOOK_ID_EXTRA, bookItem.id)
         }

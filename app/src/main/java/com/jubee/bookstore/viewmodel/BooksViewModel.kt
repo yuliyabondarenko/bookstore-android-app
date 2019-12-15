@@ -5,21 +5,21 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.jubee.bookstore.api.BookCollectionApiResponse
-import com.jubee.bookstore.model.BookModel
+import com.jubee.bookstore.dto.BookDto
 import com.jubee.bookstore.service.NetworkClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class BooksViewModel : ViewModel() {
-    val booksLiveData: LiveData<List<BookModel>>
+    val booksLiveData: LiveData<List<BookDto>>
         get() = _booksLiveData
 
     val isRefreshingLiveData: LiveData<Boolean>
         get() = _isRefreshingLiveData
 
-    private val _booksLiveData: MutableLiveData<List<BookModel>> by lazy {
-        MutableLiveData<List<BookModel>>().also {
+    private val _booksLiveData: MutableLiveData<List<BookDto>> by lazy {
+        MutableLiveData<List<BookDto>>().also {
             loadBooks()
         }
     }

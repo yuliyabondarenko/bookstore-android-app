@@ -1,6 +1,6 @@
 package com.jubee.bookstore.api
 
-import com.jubee.bookstore.model.BookModel
+import com.jubee.bookstore.dto.BookDto
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -15,5 +15,5 @@ interface BookApiService {
     ): Call<BookCollectionApiResponse>
 
     @GET("books/{id}")
-    fun getBook(@Path("id") id: Long): Call<BookModel>
+    fun getBook(@Path("id") id: Long): Call<BookDto>
 }

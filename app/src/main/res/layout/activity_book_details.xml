@@ -8,7 +8,7 @@
         <import type="android.view.View" />
         <variable
             name="book"
-            type="com.jubee.bookstore.model.BookModel" />
+            type="com.jubee.bookstore.dto.BookDto" />
     </data>
 
     <androidx.cardview.widget.CardView

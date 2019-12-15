@@ -6,15 +6,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.jubee.bookstore.databinding.BookListItemBinding
-import com.jubee.bookstore.model.BookModel
+import com.jubee.bookstore.dto.BookDto
 
 
 public class BookAdapter(
-    val clickListener: (BookModel) -> Unit
+    val clickListener: (BookDto) -> Unit
 ) :
     RecyclerView.Adapter<BookAdapter.BookItemViewHolder>() {
 
-    var data = mutableListOf<BookModel>()
+    var data = mutableListOf<BookDto>()
         set(value) {
             field = value
             notifyDataSetChanged()

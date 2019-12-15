@@ -1,10 +1,10 @@
-package com.jubee.bookstore.model
+package com.jubee.bookstore.dto
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 
-data class BookModel(
+data class BookDto(
     val id: Long = 0,
 
     @SerializedName("name")
