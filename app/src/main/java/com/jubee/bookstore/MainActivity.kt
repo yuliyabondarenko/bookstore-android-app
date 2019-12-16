@@ -2,18 +2,20 @@ package com.jubee.bookstore
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.android.material.navigation.NavigationView
 import com.jubee.bookstore.dto.BookDto
 import com.jubee.bookstore.viewmodel.BooksViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
 const val BOOK_ID_EXTRA = "com.jubee.bookstore.BOOK_ID_EXTRA"
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private val adapter = BookAdapter { bookItem: BookDto -> bookItemClicked(bookItem) }
 
@@ -22,6 +24,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         lifecycle.addObserver(MyLifecycleObserver())
+        navigationView.setNavigationItemSelectedListener(this)
 
         bookRecyclerView.layoutManager = GridLayoutManager(this, 2)
         bookRecyclerView.itemAnimator = DefaultItemAnimator()
@@ -44,6 +47,13 @@ class MainActivity : AppCompatActivity() {
             putExtra(BOOK_ID_EXTRA, bookItem.id)
         }
         startActivity(intent)
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.booksMvp -> startActivity(Intent(this, BooksMvpActivity::class.java))
+        }
+        return true
     }
 
 }

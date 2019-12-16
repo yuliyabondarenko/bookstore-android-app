@@ -4,4 +4,6 @@
     <string name="absent">absent</string>
     <string name="add_to_cart">Add</string>
     <string name="common_error_msg">Something went wrong. </string>
+    <string name="book_list_mvvm">Book list MVVM</string>
+    <string name="book_list_mvp">Book list MVP</string>
 </resources>
