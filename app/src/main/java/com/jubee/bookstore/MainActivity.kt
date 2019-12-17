@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.navigation.NavigationView
 import com.jubee.bookstore.dto.BookDto
+import com.jubee.bookstore.mvp.BooksMvpActivity
 import com.jubee.bookstore.viewmodel.BooksViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 

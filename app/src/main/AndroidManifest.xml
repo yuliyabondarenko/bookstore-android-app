@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".BooksMvpActivity"></activity>
+        <activity android:name=".mvp.BooksMvpActivity"></activity>
         <activity android:name=".BookDetailsActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
