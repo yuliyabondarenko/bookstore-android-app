@@ -22,10 +22,10 @@ class BooksViewModel : ViewModel() {
     val booksLiveData: LiveData<List<BookDto>>
         get() = _booksLiveData
 
-    private val _isRefreshingLiveData: MutableLiveData<Boolean> = MutableLiveData()
+    private val _isLoadingLiveData: MutableLiveData<Boolean> = MutableLiveData()
 
-    val isRefreshingLiveData: LiveData<Boolean>
-        get() = _isRefreshingLiveData
+    val isLoadingLiveData: LiveData<Boolean>
+        get() = _isLoadingLiveData
 
     private val _error: MutableLiveData<BookstoreError> = MutableLiveData()
 
@@ -33,12 +33,12 @@ class BooksViewModel : ViewModel() {
         get() = _error
 
     private fun loadBooks() {
-        _isRefreshingLiveData.value = true
+        _isLoadingLiveData.value = true
         _error.value = BookstoreError(false)
         NetworkClient.getBookApiService().getBookList(null, null, "price,desc")
             .enqueue(object : Callback<BookCollectionApiResponse> {
                 override fun onFailure(call: Call<BookCollectionApiResponse>, t: Throwable) {
-                    _isRefreshingLiveData.value = false
+                    _isLoadingLiveData.value = false
                     val errorMsg = "Load books failed"
                     _error.value = BookstoreError(true, errorMsg)
                     Log.e("JB/error", errorMsg, t)
@@ -50,8 +50,7 @@ class BooksViewModel : ViewModel() {
                 ) {
                     val body = response.body()!!
                     _booksLiveData.value = body._embedded.books
-                    _isRefreshingLiveData.value = false
-                    Log.i("JB/info", "Books have been loaded from server")
+                    _isLoadingLiveData.value = false
                 }
             })
     }

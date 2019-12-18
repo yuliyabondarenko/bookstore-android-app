@@ -44,8 +44,8 @@ class BooksMvvmActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
             adapter.data = books.toMutableList()
         })
 
-        booksViewModel.isRefreshingLiveData.observe(this, Observer<Boolean> { isRefreshing ->
-            swipeRefresh.isRefreshing = isRefreshing
+        booksViewModel.isLoadingLiveData.observe(this, Observer<Boolean> { isLoading ->
+            swipeRefresh.isRefreshing = isLoading
         })
 
         booksViewModel.error.observe(this, Observer<BookstoreError> { error ->

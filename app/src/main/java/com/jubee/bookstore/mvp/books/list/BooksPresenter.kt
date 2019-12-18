@@ -40,7 +40,6 @@ class BooksPresenter : MvpPresenter<BooksView>() {
                     val body = response.body()!!
                     viewState.displayBooks(body._embedded.books)
                     viewState.stopLoadProgress()
-                    Log.i("JB/info", "Books have been loaded from server")
                 }
             })
     }
