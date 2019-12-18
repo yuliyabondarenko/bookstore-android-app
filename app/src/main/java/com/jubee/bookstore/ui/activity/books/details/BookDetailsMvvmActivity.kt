@@ -2,7 +2,6 @@ package com.jubee.bookstore.ui.activity.books.details
 
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil.setContentView
 import androidx.lifecycle.Observer
@@ -12,8 +11,6 @@ import com.jubee.bookstore.databinding.ActivityBookDetailsBinding
 import com.jubee.bookstore.etc.BookstoreError
 import com.jubee.bookstore.mvvm.details.BookViewModel
 import com.jubee.bookstore.ui.activity.books.list.BOOK_ID_EXTRA
-import kotlinx.android.synthetic.main.activity_book_details.*
-import kotlinx.android.synthetic.main.activity_books_mvvm.errorMsgView
 
 
 class BookDetailsMvvmActivity : AppCompatActivity() {
