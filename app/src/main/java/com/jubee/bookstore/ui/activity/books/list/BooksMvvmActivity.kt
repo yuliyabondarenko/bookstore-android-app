@@ -49,7 +49,7 @@ class BooksMvvmActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         })
 
         booksViewModel.isLoadingLiveData.observe(this, Observer<Boolean> { isLoading ->
-            swipeRefresh.isRefreshing = isLoading
+            binding.isLoading = isLoading
         })
 
         booksViewModel.error.observe(this, Observer<BookstoreError> { error ->

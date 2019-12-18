@@ -9,6 +9,10 @@
         <import type="android.view.View" />
 
         <variable
+            name="isLoading"
+            type="Boolean" />
+
+        <variable
             name="error"
             type="com.jubee.bookstore.etc.BookstoreError" />
     </data>
@@ -41,7 +45,8 @@
             <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
                 android:id="@+id/swipeRefresh"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                app:refreshing="@{isLoading}">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/bookRecyclerView"
