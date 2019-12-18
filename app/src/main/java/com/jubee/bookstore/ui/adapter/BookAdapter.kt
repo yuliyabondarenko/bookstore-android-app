@@ -1,4 +1,4 @@
-package com.jubee.bookstore
+package com.jubee.bookstore.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.View

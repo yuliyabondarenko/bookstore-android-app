@@ -1,4 +1,4 @@
-package com.jubee.bookstore.mvp
+package com.jubee.bookstore.ui.activity.books.list
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,16 +6,15 @@ import android.view.MenuItem
 import android.view.View
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
-import com.jubee.bookstore.BOOK_ID_EXTRA
-import com.jubee.bookstore.BookAdapter
-import com.jubee.bookstore.BookDetailsActivity
+import com.jubee.bookstore.ui.adapter.BookAdapter
+import com.jubee.bookstore.ui.activity.books.details.BookDetailsMvvmActivity
 import com.jubee.bookstore.R
 import com.jubee.bookstore.dto.BookDto
 import com.jubee.bookstore.mvp.books.list.BooksPresenter
 import com.jubee.bookstore.mvp.books.list.view.BooksView
 import kotlinx.android.synthetic.main.activity_books_mvp.*
-import kotlinx.android.synthetic.main.activity_main.bookRecyclerView
-import kotlinx.android.synthetic.main.activity_main.swipeRefresh
+import kotlinx.android.synthetic.main.activity_books_mvvm.bookRecyclerView
+import kotlinx.android.synthetic.main.activity_books_mvvm.swipeRefresh
 import moxy.MvpAppCompatActivity
 import moxy.presenter.InjectPresenter
 
@@ -24,9 +23,10 @@ class BooksMvpActivity : MvpAppCompatActivity(), BooksView {
     @InjectPresenter
     lateinit var booksPresenter: BooksPresenter
 
-    private val adapter = BookAdapter { bookItem: BookDto ->
-        bookItemClicked(bookItem)
-    }
+    private val adapter =
+        BookAdapter { bookItem: BookDto ->
+            bookItemClicked(bookItem)
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,7 +73,7 @@ class BooksMvpActivity : MvpAppCompatActivity(), BooksView {
     }
 
     private fun bookItemClicked(bookItem: BookDto) {
-        val intent = Intent(this, BookDetailsActivity::class.java).apply {
+        val intent = Intent(this, BookDetailsMvvmActivity::class.java).apply {
             putExtra(BOOK_ID_EXTRA, bookItem.id)
         }
         startActivity(intent)

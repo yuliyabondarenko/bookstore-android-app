@@ -1,4 +1,4 @@
-package com.jubee.bookstore.viewmodel
+package com.jubee.bookstore.mvvm.details
 
 import android.util.Log
 import androidx.lifecycle.LiveData

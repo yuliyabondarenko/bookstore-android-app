@@ -1,4 +1,4 @@
-package com.jubee.bookstore
+package com.jubee.bookstore.etc
 
 import android.util.Log
 import androidx.lifecycle.Lifecycle

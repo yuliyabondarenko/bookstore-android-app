@@ -1,4 +1,4 @@
-package com.jubee.bookstore
+package com.jubee.bookstore.ui.activity.books.list
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,20 +9,26 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.navigation.NavigationView
+import com.jubee.bookstore.R
+import com.jubee.bookstore.ui.adapter.BookAdapter
 import com.jubee.bookstore.dto.BookDto
-import com.jubee.bookstore.mvp.BooksMvpActivity
-import com.jubee.bookstore.viewmodel.BooksViewModel
-import kotlinx.android.synthetic.main.activity_main.*
+import com.jubee.bookstore.etc.MyLifecycleObserver
+import com.jubee.bookstore.ui.activity.books.details.BookDetailsMvvmActivity
+import com.jubee.bookstore.mvvm.list.BooksViewModel
+import kotlinx.android.synthetic.main.activity_books_mvvm.*
 
-const val BOOK_ID_EXTRA = "com.jubee.bookstore.BOOK_ID_EXTRA"
+const val BOOK_ID_EXTRA = "com.jubee.bookstore.ui.activity.books.list.BOOK_ID_EXTRA"
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class BooksMvvmActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    private val adapter = BookAdapter { bookItem: BookDto -> bookItemClicked(bookItem) }
+    private val adapter =
+        BookAdapter { bookItem: BookDto ->
+            bookItemClicked(bookItem)
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_books_mvvm)
 
         lifecycle.addObserver(MyLifecycleObserver())
         navigationView.setNavigationItemSelectedListener(this)
@@ -44,7 +50,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun bookItemClicked(bookItem: BookDto) {
-        val intent = Intent(this, BookDetailsActivity::class.java).apply {
+        val intent = Intent(this, BookDetailsMvvmActivity::class.java).apply {
             putExtra(BOOK_ID_EXTRA, bookItem.id)
         }
         startActivity(intent)

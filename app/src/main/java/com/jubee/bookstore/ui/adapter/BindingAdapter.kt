@@ -1,4 +1,4 @@
-package com.jubee.bookstore
+package com.jubee.bookstore.ui.adapter
 
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter

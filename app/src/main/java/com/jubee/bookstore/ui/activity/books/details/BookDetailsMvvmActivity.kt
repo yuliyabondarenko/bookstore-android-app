@@ -1,4 +1,4 @@
-package com.jubee.bookstore
+package com.jubee.bookstore.ui.activity.books.details
 
 import android.os.Bundle
 import android.view.MenuItem
@@ -6,16 +6,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil.setContentView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.jubee.bookstore.ui.activity.books.list.BOOK_ID_EXTRA
+import com.jubee.bookstore.R
 import com.jubee.bookstore.databinding.ActivityBookDetailsBinding
-import com.jubee.bookstore.viewmodel.BookViewModel
+import com.jubee.bookstore.mvvm.details.BookViewModel
 
 
-class BookDetailsActivity : AppCompatActivity() {
+class BookDetailsMvvmActivity : AppCompatActivity() {
     private lateinit var binding: ActivityBookDetailsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = setContentView(this, R.layout.activity_book_details)
+        binding = setContentView(this,
+            R.layout.activity_book_details
+        )
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val bookId = intent.getLongExtra(BOOK_ID_EXTRA, 0)
