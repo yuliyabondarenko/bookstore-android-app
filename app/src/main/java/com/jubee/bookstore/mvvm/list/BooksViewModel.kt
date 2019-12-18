@@ -13,24 +13,24 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class BooksViewModel : ViewModel() {
-    val booksLiveData: LiveData<List<BookDto>>
-        get() = _booksLiveData
-
-    val isRefreshingLiveData: LiveData<Boolean>
-        get() = _isRefreshingLiveData
-
-    val error: LiveData<BookstoreError>
-        get() = _error
-
     private val _booksLiveData: MutableLiveData<List<BookDto>> by lazy {
         MutableLiveData<List<BookDto>>().also {
             loadBooks()
         }
     }
 
+    val booksLiveData: LiveData<List<BookDto>>
+        get() = _booksLiveData
+
     private val _isRefreshingLiveData: MutableLiveData<Boolean> = MutableLiveData()
 
+    val isRefreshingLiveData: LiveData<Boolean>
+        get() = _isRefreshingLiveData
+
     private val _error: MutableLiveData<BookstoreError> = MutableLiveData()
+
+    val error: LiveData<BookstoreError>
+        get() = _error
 
     private fun loadBooks() {
         _isRefreshingLiveData.value = true
