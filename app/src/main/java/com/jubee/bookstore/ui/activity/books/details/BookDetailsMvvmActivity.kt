@@ -31,20 +31,18 @@ class BookDetailsMvvmActivity : AppCompatActivity() {
 
         val bookViewModel = ViewModelProviders.of(this)[BookViewModel::class.java]
 
+        // TODO Fix bug, load from server on each onCreate
         bookViewModel.loadBook(bookId)
         bookViewModel.bookLiveData.observe(this, Observer { book ->
             binding.book = book
         })
 
         bookViewModel.isLoadingLiveData.observe(this, Observer<Boolean> { isLoading ->
-            if (isLoading) progressBar.visibility = View.VISIBLE
-            else progressBar.visibility = View.GONE
+            binding.isLoading = isLoading
         })
 
         bookViewModel.error.observe(this, Observer<BookstoreError> { error ->
-            errorMsgView.text = error.errorMsg
-            if (error.isPresent) errorMsgView.visibility = View.VISIBLE
-            else errorMsgView.visibility = View.GONE
+            binding.error = error
         })
     }
 

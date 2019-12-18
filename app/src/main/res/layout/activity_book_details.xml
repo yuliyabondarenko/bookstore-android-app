@@ -11,6 +11,14 @@
         <variable
             name="book"
             type="com.jubee.bookstore.dto.BookDto" />
+
+        <variable
+            name="isLoading"
+            type="Boolean" />
+
+        <variable
+            name="error"
+            type="com.jubee.bookstore.etc.BookstoreError" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,7 +29,8 @@
             android:id="@+id/progressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone"
+            android:visibility="@{isLoading ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -32,9 +41,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
+            android:text="@{error.errorMsg}"
             android:textColor="@android:color/holo_red_light"
             android:textSize="18sp"
-            android:visibility="gone"
+            android:visibility="@{error.isPresent ? View.VISIBLE : View.GONE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

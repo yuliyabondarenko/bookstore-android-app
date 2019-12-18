@@ -40,6 +40,7 @@ class BooksMvvmActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         bookRecyclerView.adapter = adapter
 
         val booksViewModel = ViewModelProviders.of(this)[BooksViewModel::class.java]
+
         booksViewModel.booksLiveData.observe(this, Observer<List<BookDto>> { books ->
             adapter.data = books.toMutableList()
         })
