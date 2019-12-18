@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.jubee.bookstore.api.BookCollectionApiResponse
 import com.jubee.bookstore.dto.BookDto
+import com.jubee.bookstore.etc.BookstoreError
 import com.jubee.bookstore.service.NetworkClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -18,6 +19,9 @@ class BooksViewModel : ViewModel() {
     val isRefreshingLiveData: LiveData<Boolean>
         get() = _isRefreshingLiveData
 
+    val error: LiveData<BookstoreError>
+        get() = _error
+
     private val _booksLiveData: MutableLiveData<List<BookDto>> by lazy {
         MutableLiveData<List<BookDto>>().also {
             loadBooks()
@@ -26,13 +30,18 @@ class BooksViewModel : ViewModel() {
 
     private val _isRefreshingLiveData: MutableLiveData<Boolean> = MutableLiveData()
 
+    private val _error: MutableLiveData<BookstoreError> = MutableLiveData()
+
     private fun loadBooks() {
         _isRefreshingLiveData.value = true
+        _error.value = BookstoreError(false)
         NetworkClient.getBookApiService().getBookList(null, null, "price,desc")
             .enqueue(object : Callback<BookCollectionApiResponse> {
                 override fun onFailure(call: Call<BookCollectionApiResponse>, t: Throwable) {
                     _isRefreshingLiveData.value = false
-                    Log.e("JB/error", "Load books failed", t)
+                    val errorMsg = "Load books failed"
+                    _error.value = BookstoreError(true, errorMsg)
+                    Log.e("JB/error", errorMsg, t)
                 }
 
                 override fun onResponse(

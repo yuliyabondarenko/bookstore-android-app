@@ -3,6 +3,7 @@ package com.jubee.bookstore.ui.activity.books.list
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -13,6 +14,7 @@ import com.jubee.bookstore.R
 import com.jubee.bookstore.ui.adapter.BookAdapter
 import com.jubee.bookstore.dto.BookDto
 import com.jubee.bookstore.etc.MyLifecycleObserver
+import com.jubee.bookstore.etc.BookstoreError
 import com.jubee.bookstore.ui.activity.books.details.BookDetailsMvvmActivity
 import com.jubee.bookstore.mvvm.list.BooksViewModel
 import kotlinx.android.synthetic.main.activity_books_mvvm.*
@@ -44,6 +46,12 @@ class BooksMvvmActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
         booksViewModel.isRefreshingLiveData.observe(this, Observer<Boolean> { isRefreshing ->
             swipeRefresh.isRefreshing = isRefreshing
+        })
+
+        booksViewModel.error.observe(this, Observer<BookstoreError> { error ->
+            errorMsgView.text = error.errorMsg
+            if (error.isPresent) errorMsgView.visibility = View.VISIBLE
+            else errorMsgView.visibility = View.GONE
         })
 
         swipeRefresh.setOnRefreshListener { booksViewModel.refresh() }
