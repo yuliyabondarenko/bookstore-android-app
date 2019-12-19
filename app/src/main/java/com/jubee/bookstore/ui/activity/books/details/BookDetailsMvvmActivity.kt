@@ -26,10 +26,8 @@ class BookDetailsMvvmActivity : AppCompatActivity() {
 
         val bookId = intent.getLongExtra(BOOK_ID_EXTRA, 0)
 
-        val bookViewModel = ViewModelProviders.of(this)[BookViewModel::class.java]
+        val bookViewModel = ViewModelProviders.of(this, BookViewModelFactory(bookId))[BookViewModel::class.java]
 
-        // TODO Fix bug, load from server on each onCreate
-        bookViewModel.loadBook(bookId)
         bookViewModel.bookLiveData.observe(this, Observer { book ->
             binding.book = book
         })

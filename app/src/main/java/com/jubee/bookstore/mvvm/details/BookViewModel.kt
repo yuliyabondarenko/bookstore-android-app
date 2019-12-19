@@ -11,10 +11,10 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class BookViewModel : ViewModel() {
+class BookViewModel(bookId: Long) : ViewModel() {
 
     private val _bookLiveData: MutableLiveData<BookDto> by lazy {
-        MutableLiveData<BookDto>()
+        MutableLiveData<BookDto>().also { loadBook(bookId) }
     }
 
     val bookLiveData: LiveData<BookDto>
@@ -30,7 +30,7 @@ class BookViewModel : ViewModel() {
     val error: LiveData<BookstoreError>
         get() = _error
 
-    fun loadBook(bookId: Long) {
+    private fun loadBook(bookId: Long) {
         _isLoadingLiveData.value = true
         _error.value = BookstoreError(false)
         NetworkClient.getBookApiService().getBook(bookId)
