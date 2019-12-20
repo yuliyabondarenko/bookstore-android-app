@@ -1,4 +1,4 @@
-package com.jubee.bookstore.ui.activity.books.list
+package com.jubee.bookstore.ui.activity.books.list.mvp
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,12 +6,13 @@ import android.view.MenuItem
 import android.view.View
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
-import com.jubee.bookstore.ui.adapter.BookAdapter
-import com.jubee.bookstore.ui.activity.books.details.BookDetailsMvvmActivity
 import com.jubee.bookstore.R
 import com.jubee.bookstore.dto.BookDto
 import com.jubee.bookstore.mvp.books.list.BooksPresenter
 import com.jubee.bookstore.mvp.books.list.view.BooksView
+import com.jubee.bookstore.ui.activity.books.details.mvp.BookDetailsMvpActivity
+import com.jubee.bookstore.ui.activity.books.list.mvvm.BOOK_ID_EXTRA
+import com.jubee.bookstore.ui.adapter.BookAdapter
 import kotlinx.android.synthetic.main.activity_books_mvp.*
 import kotlinx.android.synthetic.main.activity_books_mvvm.bookRecyclerView
 import kotlinx.android.synthetic.main.activity_books_mvvm.swipeRefresh
@@ -73,7 +74,7 @@ class BooksMvpActivity : MvpAppCompatActivity(), BooksView {
     }
 
     private fun bookItemClicked(bookItem: BookDto) {
-        val intent = Intent(this, BookDetailsMvvmActivity::class.java).apply {
+        val intent = Intent(this, BookDetailsMvpActivity::class.java).apply {
             putExtra(BOOK_ID_EXTRA, bookItem.id)
         }
         startActivity(intent)

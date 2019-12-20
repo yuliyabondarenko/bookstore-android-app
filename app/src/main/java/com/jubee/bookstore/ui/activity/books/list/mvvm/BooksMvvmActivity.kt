@@ -1,4 +1,4 @@
-package com.jubee.bookstore.ui.activity.books.list
+package com.jubee.bookstore.ui.activity.books.list.mvvm
 
 import android.content.Intent
 import android.os.Bundle
@@ -16,11 +16,12 @@ import com.jubee.bookstore.dto.BookDto
 import com.jubee.bookstore.etc.BookstoreError
 import com.jubee.bookstore.etc.MyLifecycleObserver
 import com.jubee.bookstore.mvvm.list.BooksViewModel
-import com.jubee.bookstore.ui.activity.books.details.BookDetailsMvvmActivity
+import com.jubee.bookstore.ui.activity.books.details.mvvm.BookDetailsMvvmActivity
+import com.jubee.bookstore.ui.activity.books.list.mvp.BooksMvpActivity
 import com.jubee.bookstore.ui.adapter.BookAdapter
 import kotlinx.android.synthetic.main.activity_books_mvvm.*
 
-const val BOOK_ID_EXTRA = "com.jubee.bookstore.ui.activity.books.list.BOOK_ID_EXTRA"
+const val BOOK_ID_EXTRA = "com.jubee.bookstore.ui.activity.books.list.mvvm.BOOK_ID_EXTRA"
 
 class BooksMvvmActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 

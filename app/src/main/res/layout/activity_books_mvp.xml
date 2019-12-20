@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.activity.books.list.BooksMvpActivity">
+    tools:context=".ui.activity.books.list.mvp.BooksMvpActivity">
 
     <TextView
         android:id="@+id/errorMsgView"
