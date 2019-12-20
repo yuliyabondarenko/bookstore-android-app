@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.jubee.bookstore.dto.BookDto
 import com.jubee.bookstore.etc.BookstoreError
-import com.jubee.bookstore.service.NetworkClient
+import com.jubee.bookstore.service.NetworkService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -33,7 +33,7 @@ class BookDetailsViewModel(bookId: Long) : ViewModel() {
     private fun loadBook(bookId: Long) {
         _isLoadingLiveData.value = true
         _error.value = BookstoreError(false)
-        NetworkClient.getBookApiService().getBook(bookId)
+        NetworkService.bookApi.getBook(bookId)
             .enqueue(object : Callback<BookDto> {
                 override fun onFailure(call: Call<BookDto>, t: Throwable) {
                     _isLoadingLiveData.value = false

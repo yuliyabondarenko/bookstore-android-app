@@ -3,7 +3,7 @@ package com.jubee.bookstore.mvp.books.list
 import android.util.Log
 import com.jubee.bookstore.api.BookCollectionApiResponse
 import com.jubee.bookstore.mvp.books.list.view.BookListView
-import com.jubee.bookstore.service.NetworkClient
+import com.jubee.bookstore.service.NetworkService
 import moxy.InjectViewState
 import moxy.MvpPresenter
 import retrofit2.Call
@@ -24,7 +24,7 @@ class BookListPresenter : MvpPresenter<BookListView>() {
     private fun loadBooks() {
         viewState.startLoadProgress()
         viewState.cleanError()
-        NetworkClient.getBookApiService().getBookList(null, null, "price,desc")
+        NetworkService.bookApi.getBookList(null, null, "price,desc")
             .enqueue(object : Callback<BookCollectionApiResponse> {
                 override fun onFailure(call: Call<BookCollectionApiResponse>, t: Throwable) {
                     viewState.stopLoadProgress()

@@ -6,7 +6,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-interface BookApiService {
+interface BookApi {
     @GET("books")
     fun getBookList(
         @Query("size") size: Int?,
