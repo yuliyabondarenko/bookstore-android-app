@@ -4,6 +4,11 @@ import android.util.Log
 import java.lang.Exception
 import java.lang.NullPointerException
 
+sealed class Result<T>
+class Success<T>(data: T) : Result<T>()
+class Failure<T>(t: Throwable) : Result<T>()
+class Loading<T> : Result<T>()
+
 class StudyNotes {
 
     fun load() {

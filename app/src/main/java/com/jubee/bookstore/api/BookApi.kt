@@ -8,11 +8,11 @@ import retrofit2.http.Query
 
 interface BookApi {
     @GET("books")
-    fun getBookList(
-        @Query("size") size: Int?,
-        @Query("page") page: Int?,
-        @Query("sort") sort: String?
-    ): Call<BookCollectionApiResponse>
+    suspend fun getBookList(
+        @Query("sort") sort: String? = "price,desc",
+        @Query("size") size: Int? = null,
+        @Query("page") page: Int? = null
+    ): BookCollectionApiResponse
 
     @GET("books/{id}")
     fun getBook(@Path("id") id: Long): Call<BookDto>
