@@ -11,7 +11,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class BookViewModel(bookId: Long) : ViewModel() {
+class BookDetailsViewModel(bookId: Long) : ViewModel() {
 
     private val _bookLiveData: MutableLiveData<BookDto> by lazy {
         MutableLiveData<BookDto>().also { loadBook(bookId) }

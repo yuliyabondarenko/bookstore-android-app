@@ -8,21 +8,21 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import com.jubee.bookstore.R
 import com.jubee.bookstore.dto.BookDto
-import com.jubee.bookstore.mvp.books.list.BooksPresenter
-import com.jubee.bookstore.mvp.books.list.view.BooksView
+import com.jubee.bookstore.mvp.books.list.BookListPresenter
+import com.jubee.bookstore.mvp.books.list.view.BookListView
 import com.jubee.bookstore.ui.activity.books.details.mvp.BookDetailsMvpActivity
 import com.jubee.bookstore.ui.activity.books.list.mvvm.BOOK_ID_EXTRA
 import com.jubee.bookstore.ui.adapter.BookAdapter
-import kotlinx.android.synthetic.main.activity_books_mvp.*
-import kotlinx.android.synthetic.main.activity_books_mvvm.bookRecyclerView
-import kotlinx.android.synthetic.main.activity_books_mvvm.swipeRefresh
+import kotlinx.android.synthetic.main.activity_book_list_mvp.*
+import kotlinx.android.synthetic.main.activity_book_list_mvvm.bookRecyclerView
+import kotlinx.android.synthetic.main.activity_book_list_mvvm.swipeRefresh
 import moxy.MvpAppCompatActivity
 import moxy.presenter.InjectPresenter
 
-class BooksMvpActivity : MvpAppCompatActivity(), BooksView {
+class BookListMvpActivity : MvpAppCompatActivity(), BookListView {
 
     @InjectPresenter
-    lateinit var booksPresenter: BooksPresenter
+    lateinit var bookListPresenter: BookListPresenter
 
     private val adapter =
         BookAdapter { bookItem: BookDto ->
@@ -31,14 +31,14 @@ class BooksMvpActivity : MvpAppCompatActivity(), BooksView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_books_mvp)
+        setContentView(R.layout.activity_book_list_mvp)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         bookRecyclerView.layoutManager = GridLayoutManager(this, 2)
         bookRecyclerView.itemAnimator = DefaultItemAnimator()
         bookRecyclerView.adapter = adapter
 
-        swipeRefresh.setOnRefreshListener { booksPresenter.onRefreshBooks() }
+        swipeRefresh.setOnRefreshListener { bookListPresenter.onRefreshBooks() }
     }
 
     override fun startLoadProgress() {

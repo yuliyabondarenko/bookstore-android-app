@@ -2,7 +2,7 @@ package com.jubee.bookstore.mvp.books.list
 
 import android.util.Log
 import com.jubee.bookstore.api.BookCollectionApiResponse
-import com.jubee.bookstore.mvp.books.list.view.BooksView
+import com.jubee.bookstore.mvp.books.list.view.BookListView
 import com.jubee.bookstore.service.NetworkClient
 import moxy.InjectViewState
 import moxy.MvpPresenter
@@ -11,7 +11,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 @InjectViewState
-class BooksPresenter : MvpPresenter<BooksView>() {
+class BookListPresenter : MvpPresenter<BookListView>() {
 
     override fun onFirstViewAttach() {
         loadBooks()

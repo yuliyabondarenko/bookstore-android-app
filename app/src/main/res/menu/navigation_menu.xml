@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/booksMvp"
+            android:id="@+id/bookListMvp"
             android:orderInCategory="1"
             android:title="@string/book_list_mvp" />
     </group>

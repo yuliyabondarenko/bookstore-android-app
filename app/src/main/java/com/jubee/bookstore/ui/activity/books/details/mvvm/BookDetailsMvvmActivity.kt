@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.jubee.bookstore.R
 import com.jubee.bookstore.databinding.ActivityBookDetailsBinding
 import com.jubee.bookstore.etc.BookstoreError
-import com.jubee.bookstore.mvvm.details.BookViewModel
+import com.jubee.bookstore.mvvm.details.BookDetailsViewModel
 import com.jubee.bookstore.ui.activity.books.list.mvvm.BOOK_ID_EXTRA
 
 
@@ -24,8 +24,8 @@ class BookDetailsMvvmActivity : AppCompatActivity() {
         val bookId = intent.getLongExtra(BOOK_ID_EXTRA, 0)
 
         val bookViewModel = ViewModelProviders.of(
-            this, BookViewModelFactory(bookId)
-        )[BookViewModel::class.java]
+            this, BookDetailsViewModelFactory(bookId)
+        )[BookDetailsViewModel::class.java]
 
         bookViewModel.bookLiveData.observe(this, Observer { book ->
             binding.book = book

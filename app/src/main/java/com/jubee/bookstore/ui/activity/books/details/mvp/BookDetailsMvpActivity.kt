@@ -8,7 +8,7 @@ import com.jubee.bookstore.databinding.ActivityBookDetailsBinding
 import com.jubee.bookstore.dto.BookDto
 import com.jubee.bookstore.etc.BookstoreError
 import com.jubee.bookstore.mvp.books.details.BookDetailsPresenter
-import com.jubee.bookstore.mvp.books.details.BookDetailsView
+import com.jubee.bookstore.mvp.books.details.view.BookDetailsView
 import com.jubee.bookstore.ui.activity.books.list.mvvm.BOOK_ID_EXTRA
 import moxy.MvpAppCompatActivity
 import moxy.presenter.InjectPresenter
@@ -16,6 +16,7 @@ import moxy.presenter.ProvidePresenter
 
 
 class BookDetailsMvpActivity : MvpAppCompatActivity(), BookDetailsView {
+
     @InjectPresenter
     lateinit var bookDetailsPresenter: BookDetailsPresenter
 

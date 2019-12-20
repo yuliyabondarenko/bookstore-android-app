@@ -11,21 +11,21 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.navigation.NavigationView
 import com.jubee.bookstore.R
-import com.jubee.bookstore.databinding.ActivityBooksMvvmBinding
+import com.jubee.bookstore.databinding.ActivityBookListMvvmBinding
 import com.jubee.bookstore.dto.BookDto
 import com.jubee.bookstore.etc.BookstoreError
 import com.jubee.bookstore.etc.MyLifecycleObserver
-import com.jubee.bookstore.mvvm.list.BooksViewModel
+import com.jubee.bookstore.mvvm.list.BookListViewModel
 import com.jubee.bookstore.ui.activity.books.details.mvvm.BookDetailsMvvmActivity
-import com.jubee.bookstore.ui.activity.books.list.mvp.BooksMvpActivity
+import com.jubee.bookstore.ui.activity.books.list.mvp.BookListMvpActivity
 import com.jubee.bookstore.ui.adapter.BookAdapter
-import kotlinx.android.synthetic.main.activity_books_mvvm.*
+import kotlinx.android.synthetic.main.activity_book_list_mvvm.*
 
 const val BOOK_ID_EXTRA = "com.jubee.bookstore.ui.activity.books.list.mvvm.BOOK_ID_EXTRA"
 
-class BooksMvvmActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class BookListMvvmActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    private lateinit var binding: ActivityBooksMvvmBinding
+    private lateinit var binding: ActivityBookListMvvmBinding
 
     private val adapter =
         BookAdapter { bookItem: BookDto ->
@@ -34,7 +34,7 @@ class BooksMvvmActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = setContentView(this, R.layout.activity_books_mvvm)
+        binding = setContentView(this, R.layout.activity_book_list_mvvm)
 
         lifecycle.addObserver(MyLifecycleObserver())
         navigationView.setNavigationItemSelectedListener(this)
@@ -43,21 +43,21 @@ class BooksMvvmActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         bookRecyclerView.itemAnimator = DefaultItemAnimator()
         bookRecyclerView.adapter = adapter
 
-        val booksViewModel = ViewModelProviders.of(this)[BooksViewModel::class.java]
+        val bookListViewModel = ViewModelProviders.of(this)[BookListViewModel::class.java]
 
-        booksViewModel.booksLiveData.observe(this, Observer<List<BookDto>> { books ->
+        bookListViewModel.booksLiveData.observe(this, Observer<List<BookDto>> { books ->
             adapter.data = books.toMutableList()
         })
 
-        booksViewModel.isLoadingLiveData.observe(this, Observer<Boolean> { isLoading ->
+        bookListViewModel.isLoadingLiveData.observe(this, Observer<Boolean> { isLoading ->
             binding.isLoading = isLoading
         })
 
-        booksViewModel.error.observe(this, Observer<BookstoreError> { error ->
+        bookListViewModel.error.observe(this, Observer<BookstoreError> { error ->
             binding.error = error
         })
 
-        swipeRefresh.setOnRefreshListener { booksViewModel.refresh() }
+        swipeRefresh.setOnRefreshListener { bookListViewModel.refresh() }
     }
 
     private fun bookItemClicked(bookItem: BookDto) {
@@ -69,7 +69,7 @@ class BooksMvvmActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.booksMvp -> startActivity(Intent(this, BooksMvpActivity::class.java))
+            R.id.bookListMvp -> startActivity(Intent(this, BookListMvpActivity::class.java))
         }
         return true
     }

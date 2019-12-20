@@ -2,6 +2,7 @@ package com.jubee.bookstore.mvp.books.details
 
 import android.util.Log
 import com.jubee.bookstore.dto.BookDto
+import com.jubee.bookstore.mvp.books.details.view.BookDetailsView
 import com.jubee.bookstore.service.NetworkClient
 import moxy.InjectViewState
 import moxy.MvpPresenter
