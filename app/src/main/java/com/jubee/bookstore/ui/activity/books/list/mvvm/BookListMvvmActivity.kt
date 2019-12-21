@@ -10,19 +10,19 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import com.jubee.bookstore.R
-import com.jubee.bookstore.databinding.ActivityBookListMvvmBinding
+import com.jubee.bookstore.databinding.ActivityBookListBinding
 import com.jubee.bookstore.dto.BookDto
 import com.jubee.bookstore.etc.BookstoreError
 import com.jubee.bookstore.mvvm.list.BookListViewModel
 import com.jubee.bookstore.ui.activity.books.details.mvvm.BookDetailsMvvmActivity
 import com.jubee.bookstore.ui.adapter.BookAdapter
-import kotlinx.android.synthetic.main.activity_book_list_mvvm.*
+import kotlinx.android.synthetic.main.activity_book_list.*
 
 const val BOOK_ID_EXTRA = "com.jubee.bookstore.ui.activity.books.list.mvvm.BOOK_ID_EXTRA"
 
 class BookListMvvmActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityBookListMvvmBinding
+    private lateinit var binding: ActivityBookListBinding
 
     private val adapter =
         BookAdapter { bookItem: BookDto ->
@@ -31,7 +31,7 @@ class BookListMvvmActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = setContentView(this, R.layout.activity_book_list_mvvm)
+        binding = setContentView(this, R.layout.activity_book_list)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         bookRecyclerView.layoutManager = GridLayoutManager(this, 2)
@@ -56,9 +56,10 @@ class BookListMvvmActivity : AppCompatActivity() {
     }
 
     private fun bookItemClicked(bookItem: BookDto) {
-        val intent = Intent(this, BookDetailsMvvmActivity::class.java).apply {
-            putExtra(BOOK_ID_EXTRA, bookItem.id)
-        }
+        val intent = Intent(this, BookDetailsMvvmActivity::class.java)
+            .apply {
+                putExtra(BOOK_ID_EXTRA, bookItem.id)
+            }
         startActivity(intent)
     }
 

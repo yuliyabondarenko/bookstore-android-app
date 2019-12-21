@@ -3,19 +3,19 @@ package com.jubee.bookstore.ui.activity.books.list.mvp
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
+import androidx.databinding.DataBindingUtil.setContentView
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import com.jubee.bookstore.R
+import com.jubee.bookstore.databinding.ActivityBookListBinding
 import com.jubee.bookstore.dto.BookDto
+import com.jubee.bookstore.etc.BookstoreError
 import com.jubee.bookstore.mvp.books.list.BookListPresenter
 import com.jubee.bookstore.mvp.books.list.view.BookListView
 import com.jubee.bookstore.ui.activity.books.details.mvp.BookDetailsMvpActivity
 import com.jubee.bookstore.ui.activity.books.list.mvvm.BOOK_ID_EXTRA
 import com.jubee.bookstore.ui.adapter.BookAdapter
-import kotlinx.android.synthetic.main.activity_book_list_mvp.*
-import kotlinx.android.synthetic.main.activity_book_list_mvvm.bookRecyclerView
-import kotlinx.android.synthetic.main.activity_book_list_mvvm.swipeRefresh
+import kotlinx.android.synthetic.main.activity_book_list.*
 import moxy.MvpAppCompatActivity
 import moxy.presenter.InjectPresenter
 
@@ -24,6 +24,8 @@ class BookListMvpActivity : MvpAppCompatActivity(), BookListView {
     @InjectPresenter
     lateinit var bookListPresenter: BookListPresenter
 
+    private lateinit var binding: ActivityBookListBinding
+
     private val adapter =
         BookAdapter { bookItem: BookDto ->
             bookItemClicked(bookItem)
@@ -31,10 +33,11 @@ class BookListMvpActivity : MvpAppCompatActivity(), BookListView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_book_list_mvp)
+        binding = setContentView(this, R.layout.activity_book_list)
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        bookRecyclerView.layoutManager = GridLayoutManager(this, 2)
+        bookRecyclerView.layoutManager = GridLayoutManager(this, 3)
         bookRecyclerView.itemAnimator = DefaultItemAnimator()
         bookRecyclerView.adapter = adapter
 
@@ -42,11 +45,11 @@ class BookListMvpActivity : MvpAppCompatActivity(), BookListView {
     }
 
     override fun startLoadProgress() {
-        swipeRefresh.isRefreshing = true
+        binding.isLoading = true
     }
 
     override fun stopLoadProgress() {
-        swipeRefresh.isRefreshing = false
+        binding.isLoading = false
     }
 
     override fun displayBooks(books: List<BookDto>) {
@@ -54,19 +57,18 @@ class BookListMvpActivity : MvpAppCompatActivity(), BookListView {
     }
 
     override fun showError(errorMsg: String) {
-        errorMsgView.text = errorMsg
-        errorMsgView.visibility = View.VISIBLE
+        binding.error = BookstoreError(true, errorMsg)
     }
 
     override fun cleanError() {
-        errorMsgView.text = null
-        errorMsgView.visibility = View.GONE
+        binding.error = BookstoreError(false)
     }
 
     private fun bookItemClicked(bookItem: BookDto) {
-        val intent = Intent(this, BookDetailsMvpActivity::class.java).apply {
-            putExtra(BOOK_ID_EXTRA, bookItem.id)
-        }
+        val intent = Intent(this, BookDetailsMvpActivity::class.java)
+            .apply {
+                putExtra(BOOK_ID_EXTRA, bookItem.id)
+            }
         startActivity(intent)
     }
 
