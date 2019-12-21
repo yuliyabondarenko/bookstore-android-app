@@ -2,12 +2,23 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/bookListMvvm"
-            android:orderInCategory="1"
-            android:title="@string/book_list_mvvm" />
+            android:id="@+id/bookListMvvmFragment"
+            android:title="@string/book_list_mvvm_fragment" />
         <item
-            android:id="@+id/bookListMvp"
-            android:orderInCategory="1"
-            android:title="@string/book_list_mvp" />
+            android:id="@+id/bookListMvpFragment"
+            android:title="@string/book_list_mvp_fragment" />
     </group>
+
+    <item android:title="@string/activities_menu_group">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/bookListMvvm"
+                    android:title="@string/book_list_mvvm" />
+                <item
+                    android:id="@+id/bookListMvp"
+                    android:title="@string/book_list_mvp" />
+            </group>
+        </menu>
+    </item>
 </menu>
