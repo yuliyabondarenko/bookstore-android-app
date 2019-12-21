@@ -63,6 +63,13 @@ class BookListMvpActivity : MvpAppCompatActivity(), BookListView {
         errorMsgView.visibility = View.GONE
     }
 
+    private fun bookItemClicked(bookItem: BookDto) {
+        val intent = Intent(this, BookDetailsMvpActivity::class.java).apply {
+            putExtra(BOOK_ID_EXTRA, bookItem.id)
+        }
+        startActivity(intent)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
@@ -71,12 +78,5 @@ class BookListMvpActivity : MvpAppCompatActivity(), BookListView {
             }
             else -> super.onOptionsItemSelected(item)
         }
-    }
-
-    private fun bookItemClicked(bookItem: BookDto) {
-        val intent = Intent(this, BookDetailsMvpActivity::class.java).apply {
-            putExtra(BOOK_ID_EXTRA, bookItem.id)
-        }
-        startActivity(intent)
     }
 }

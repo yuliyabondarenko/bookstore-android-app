@@ -9,21 +9,18 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
-import com.google.android.material.navigation.NavigationView
 import com.jubee.bookstore.R
 import com.jubee.bookstore.databinding.ActivityBookListMvvmBinding
 import com.jubee.bookstore.dto.BookDto
 import com.jubee.bookstore.etc.BookstoreError
-import com.jubee.bookstore.etc.MyLifecycleObserver
 import com.jubee.bookstore.mvvm.list.BookListViewModel
 import com.jubee.bookstore.ui.activity.books.details.mvvm.BookDetailsMvvmActivity
-import com.jubee.bookstore.ui.activity.books.list.mvp.BookListMvpActivity
 import com.jubee.bookstore.ui.adapter.BookAdapter
 import kotlinx.android.synthetic.main.activity_book_list_mvvm.*
 
 const val BOOK_ID_EXTRA = "com.jubee.bookstore.ui.activity.books.list.mvvm.BOOK_ID_EXTRA"
 
-class BookListMvvmActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class BookListMvvmActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityBookListMvvmBinding
 
@@ -35,9 +32,7 @@ class BookListMvvmActivity : AppCompatActivity(), NavigationView.OnNavigationIte
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = setContentView(this, R.layout.activity_book_list_mvvm)
-
-        lifecycle.addObserver(MyLifecycleObserver())
-        navigationView.setNavigationItemSelectedListener(this)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         bookRecyclerView.layoutManager = GridLayoutManager(this, 2)
         bookRecyclerView.itemAnimator = DefaultItemAnimator()
@@ -67,11 +62,14 @@ class BookListMvvmActivity : AppCompatActivity(), NavigationView.OnNavigationIte
         startActivity(intent)
     }
 
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.bookListMvp -> startActivity(Intent(this, BookListMvpActivity::class.java))
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
-        return true
     }
 
 }
