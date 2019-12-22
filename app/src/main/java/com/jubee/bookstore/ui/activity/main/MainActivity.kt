@@ -7,7 +7,7 @@ import androidx.fragment.app.FragmentActivity
 import com.google.android.material.navigation.NavigationView
 import com.jubee.bookstore.R
 import com.jubee.bookstore.ui.fragment.books.list.mvp.BookListMvpFragment
-import com.jubee.bookstore.ui.fragment.books.list.mvvm.BookListMvvFragment
+import com.jubee.bookstore.ui.fragment.books.list.mvvm.BookListMvvmFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -22,7 +22,7 @@ class MainActivity : FragmentActivity(), NavigationView.OnNavigationItemSelected
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.bookListMvvm -> displayFragment(BookListMvvFragment())
+            R.id.bookListMvvm -> displayFragment(BookListMvvmFragment())
             R.id.bookListMvp -> displayFragment(BookListMvpFragment())
         }
         return super.onOptionsItemSelected(item)

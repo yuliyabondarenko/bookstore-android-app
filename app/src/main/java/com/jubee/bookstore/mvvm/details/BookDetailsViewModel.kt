@@ -4,12 +4,12 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.jubee.bookstore.dto.BookDto
 import com.jubee.bookstore.etc.BookstoreError
 import com.jubee.bookstore.service.NetworkService
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class BookDetailsViewModel(bookId: Long) : ViewModel() {
 
@@ -25,31 +25,24 @@ class BookDetailsViewModel(bookId: Long) : ViewModel() {
     val isLoadingLiveData: LiveData<Boolean>
         get() = _isLoadingLiveData
 
-    private val _error: MutableLiveData<BookstoreError> = MutableLiveData()
+    private val _errorLiveData: MutableLiveData<BookstoreError> = MutableLiveData()
 
-    val error: LiveData<BookstoreError>
-        get() = _error
+    val errorLiveData: LiveData<BookstoreError>
+        get() = _errorLiveData
 
     private fun loadBook(bookId: Long) {
         _isLoadingLiveData.value = true
-        _error.value = BookstoreError(false)
-        NetworkService.bookApi.getBook(bookId)
-            .enqueue(object : Callback<BookDto> {
-                override fun onFailure(call: Call<BookDto>, t: Throwable) {
-                    _isLoadingLiveData.value = false
-                    val errorMsg = "Load book failed"
-                    _error.value = BookstoreError(true, errorMsg)
-                    Log.e("JB/error", errorMsg, t)
-                }
-
-                override fun onResponse(
-                    call: Call<BookDto>,
-                    response: Response<BookDto>
-                ) {
-                    _bookLiveData.value = response.body()
-                    _isLoadingLiveData.value = false
-                }
-
-            })
+        _errorLiveData.value = BookstoreError(false)
+        this.viewModelScope.launch(Dispatchers.Main) {
+            try {
+                _bookLiveData.value = NetworkService.bookApi.getBook(bookId)
+            } catch (e: Exception) {
+                val errorMsg = "Load book failed"
+                _errorLiveData.value = BookstoreError(true, errorMsg)
+                Log.e("JB/error", errorMsg, e)
+            } finally {
+                _isLoadingLiveData.value = false
+            }
+        }
     }
 }

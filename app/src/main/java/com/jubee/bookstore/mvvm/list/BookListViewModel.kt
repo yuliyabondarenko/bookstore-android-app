@@ -13,7 +13,6 @@ import kotlinx.coroutines.launch
 
 
 class BookListViewModel : ViewModel() {
-    private val bookApi = NetworkService.bookApi
 
     private val _booksLiveData: MutableLiveData<List<BookDto>> by lazy {
         MutableLiveData<List<BookDto>>().also {
@@ -39,7 +38,7 @@ class BookListViewModel : ViewModel() {
         _errorLiveData.value = BookstoreError(false)
         this.viewModelScope.launch(Dispatchers.Main) {
             try {
-                val response = bookApi.getBookList()
+                val response = NetworkService.bookApi.getBookList()
                 _booksLiveData.value = response._embedded.books
             } catch (e: Exception) {
                 val errorMsg = "Load books failed"

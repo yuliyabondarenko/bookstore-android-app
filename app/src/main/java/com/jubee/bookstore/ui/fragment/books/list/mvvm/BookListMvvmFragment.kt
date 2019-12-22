@@ -22,7 +22,7 @@ import com.jubee.bookstore.ui.adapter.BookAdapter
 
 const val BOOK_ID_EXTRA = "com.jubee.bookstore.ui.fragment.books.list.mvvm.BOOK_ID_EXTRA"
 
-class BookListMvvFragment : Fragment() {
+class BookListMvvmFragment : Fragment() {
 
     private lateinit var binding: FragmentBookListBinding
 
@@ -52,7 +52,7 @@ class BookListMvvFragment : Fragment() {
             binding.isLoading = isLoading
         })
 
-        bookListViewModel.error.observe(this, Observer<BookstoreError> { error ->
+        bookListViewModel.errorLiveData.observe(this, Observer<BookstoreError> { error ->
             binding.error = error
         })
 

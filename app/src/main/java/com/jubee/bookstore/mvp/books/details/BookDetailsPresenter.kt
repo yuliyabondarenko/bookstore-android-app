@@ -1,41 +1,31 @@
 package com.jubee.bookstore.mvp.books.details
 
 import android.util.Log
-import com.jubee.bookstore.dto.BookDto
+import com.jubee.bookstore.mvp.AbstractPresenter
 import com.jubee.bookstore.mvp.books.details.view.BookDetailsView
 import com.jubee.bookstore.service.NetworkService
+import kotlinx.coroutines.launch
 import moxy.InjectViewState
-import moxy.MvpPresenter
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 @InjectViewState
-class BookDetailsPresenter(private val bookId: Long) : MvpPresenter<BookDetailsView>() {
+class BookDetailsPresenter(private val bookId: Long) : AbstractPresenter<BookDetailsView>() {
 
     override fun onFirstViewAttach() {
         loadBook()
     }
 
-    private fun loadBook() {
+    private fun loadBook() = launch {
         viewState.startLoadProgress()
         viewState.cleanError()
-        NetworkService.bookApi.getBook(bookId)
-            .enqueue(object : Callback<BookDto> {
-                override fun onFailure(call: Call<BookDto>, t: Throwable) {
-                    viewState.stopLoadProgress()
-                    val errorMsg = "Load book failed"
-                    viewState.showError(errorMsg)
-                    Log.e("JB/error", errorMsg, t)
-                }
-
-                override fun onResponse(
-                    call: Call<BookDto>,
-                    response: Response<BookDto>
-                ) {
-                    viewState.displayBook(response.body()!!)
-                    viewState.stopLoadProgress()
-                }
-            })
+        try {
+            val response = NetworkService.bookApi.getBook(bookId)
+            viewState.displayBook(response)
+        } catch (e: Exception) {
+            val errorMsg = "Load book failed"
+            viewState.showError(errorMsg)
+            Log.e("JB/error", errorMsg, e)
+        } finally {
+            viewState.stopLoadProgress()
+        }
     }
 }

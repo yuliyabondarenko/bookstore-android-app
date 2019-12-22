@@ -35,7 +35,7 @@ class BookDetailsMvvmActivity : AppCompatActivity() {
             binding.isLoading = isLoading
         })
 
-        bookViewModel.error.observe(this, Observer<BookstoreError> { error ->
+        bookViewModel.errorLiveData.observe(this, Observer<BookstoreError> { error ->
             binding.error = error
         })
     }
