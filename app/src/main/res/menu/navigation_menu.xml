@@ -1,15 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/bookListMvvmFragment"
-            android:title="@string/book_list_mvvm_fragment" />
-        <item
-            android:id="@+id/bookListMvpFragment"
-            android:title="@string/book_list_mvp_fragment" />
-    </group>
-
-    <item android:title="@string/activities_menu_group">
+    <item android:title="@string/fragments_menu_group">
         <menu>
             <group android:checkableBehavior="single">
                 <item

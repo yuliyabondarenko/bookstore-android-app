@@ -19,10 +19,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.activity.books.details.mvvm.BookDetailsMvvmActivity" />
         <activity android:name=".ui.activity.books.details.mvp.BookDetailsMvpActivity" />
         <activity android:name=".ui.fragment.books.list.mvvm.BookListMvvFragment" />
-        <activity android:name=".ui.activity.books.list.mvp.BookListMvpActivity" />
-        <activity android:name=".ui.activity.books.details.mvvm.BookDetailsMvvmActivity" />
+        <activity android:name=".ui.fragment.books.list.mvp.BookListMvpFragment" />
     </application>
 
 </manifest>

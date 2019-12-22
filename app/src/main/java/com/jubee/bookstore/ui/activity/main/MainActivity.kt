@@ -1,15 +1,13 @@
 package com.jubee.bookstore.ui.activity.main
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.google.android.material.navigation.NavigationView
 import com.jubee.bookstore.R
-import com.jubee.bookstore.ui.activity.books.list.mvp.BookListMvpActivity
-import com.jubee.bookstore.ui.fragment.books.list.mvvm.BookListMvvFragment
 import com.jubee.bookstore.ui.fragment.books.list.mvp.BookListMvpFragment
+import com.jubee.bookstore.ui.fragment.books.list.mvvm.BookListMvvFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -24,9 +22,8 @@ class MainActivity : FragmentActivity(), NavigationView.OnNavigationItemSelected
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.bookListMvp -> startActivity(Intent(this, BookListMvpActivity::class.java))
-            R.id.bookListMvvmFragment -> displayFragment(BookListMvvFragment())
-            R.id.bookListMvpFragment -> displayFragment(BookListMvpFragment())
+            R.id.bookListMvvm -> displayFragment(BookListMvvFragment())
+            R.id.bookListMvp -> displayFragment(BookListMvpFragment())
         }
         return super.onOptionsItemSelected(item)
 
