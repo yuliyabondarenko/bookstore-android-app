@@ -7,15 +7,15 @@ import androidx.databinding.DataBindingUtil.setContentView
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import com.jubee.bookstore.R
-import com.jubee.bookstore.databinding.ActivityBookListBinding
+import com.jubee.bookstore.databinding.FragmentBookListBinding
 import com.jubee.bookstore.dto.BookDto
 import com.jubee.bookstore.etc.BookstoreError
 import com.jubee.bookstore.mvp.books.list.BookListPresenter
 import com.jubee.bookstore.mvp.books.list.view.BookListView
 import com.jubee.bookstore.ui.activity.books.details.mvp.BookDetailsMvpActivity
-import com.jubee.bookstore.ui.activity.books.list.mvvm.BOOK_ID_EXTRA
+import com.jubee.bookstore.ui.fragment.books.list.mvvm.BOOK_ID_EXTRA
 import com.jubee.bookstore.ui.adapter.BookAdapter
-import kotlinx.android.synthetic.main.activity_book_list.*
+import kotlinx.android.synthetic.main.fragment_book_list.*
 import moxy.MvpAppCompatActivity
 import moxy.presenter.InjectPresenter
 
@@ -24,7 +24,7 @@ class BookListMvpActivity : MvpAppCompatActivity(), BookListView {
     @InjectPresenter
     lateinit var bookListPresenter: BookListPresenter
 
-    private lateinit var binding: ActivityBookListBinding
+    private lateinit var binding: FragmentBookListBinding
 
     private val adapter =
         BookAdapter { bookItem: BookDto ->
@@ -33,7 +33,7 @@ class BookListMvpActivity : MvpAppCompatActivity(), BookListView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = setContentView(this, R.layout.activity_book_list)
+        binding = setContentView(this, R.layout.fragment_book_list)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 

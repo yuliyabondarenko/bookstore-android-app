@@ -9,7 +9,7 @@ import com.jubee.bookstore.databinding.BookListItemBinding
 import com.jubee.bookstore.dto.BookDto
 
 
-public class BookAdapter(
+class BookAdapter(
     val clickListener: (BookDto) -> Unit
 ) :
     RecyclerView.Adapter<BookAdapter.BookItemViewHolder>() {

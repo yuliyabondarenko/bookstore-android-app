@@ -10,7 +10,7 @@ import com.jubee.bookstore.R
 import com.jubee.bookstore.databinding.ActivityBookDetailsBinding
 import com.jubee.bookstore.etc.BookstoreError
 import com.jubee.bookstore.mvvm.details.BookDetailsViewModel
-import com.jubee.bookstore.ui.activity.books.list.mvvm.BOOK_ID_EXTRA
+import com.jubee.bookstore.ui.fragment.books.list.mvvm.BOOK_ID_EXTRA
 
 
 class BookDetailsMvvmActivity : AppCompatActivity() {

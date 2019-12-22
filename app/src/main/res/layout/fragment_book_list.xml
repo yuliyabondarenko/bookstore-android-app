@@ -3,15 +3,48 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="isLoading"
+            type="Boolean" />
+
+        <variable
+            name="error"
+            type="com.jubee.bookstore.etc.BookstoreError" />
+    </data>
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/helloFragmentText"
-            android:layout_width="wrap_content"
+            android:id="@+id/errorMsgView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18sp" />
+            android:layout_margin="8dp"
+            android:text="@{error.errorMsg}"
+            android:textAlignment="center"
+            android:textColor="@android:color/holo_red_light"
+            android:textSize="18sp"
+            android:visibility="@{error.isPresent ? View.VISIBLE : View.GONE}"
+            tools:text="@string/common_error_msg"
+            tools:visibility="visible" />
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:refreshing="@{isLoading}">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/bookRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </LinearLayout>
 </layout>
