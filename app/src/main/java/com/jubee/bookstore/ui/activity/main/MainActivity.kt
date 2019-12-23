@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.google.android.material.navigation.NavigationView
 import com.jubee.bookstore.R
+import com.jubee.bookstore.app.BookstoreApplication
 import com.jubee.bookstore.ui.fragment.books.list.mvp.BookListMvpFragment
 import com.jubee.bookstore.ui.fragment.books.list.mvvm.BookListMvvmFragment
 import kotlinx.android.synthetic.main.activity_main.*
@@ -14,6 +15,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : FragmentActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        BookstoreApplication.instance.appComponent.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 

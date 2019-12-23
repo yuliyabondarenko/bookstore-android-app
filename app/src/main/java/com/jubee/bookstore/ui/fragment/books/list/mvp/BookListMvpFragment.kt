@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import com.jubee.bookstore.R
+import com.jubee.bookstore.app.BookstoreApplication
 import com.jubee.bookstore.databinding.FragmentBookListBinding
 import com.jubee.bookstore.dto.BookDto
 import com.jubee.bookstore.etc.BookstoreError
@@ -16,14 +17,13 @@ import com.jubee.bookstore.mvp.books.list.BookListPresenter
 import com.jubee.bookstore.mvp.books.list.view.BookListView
 import com.jubee.bookstore.ui.activity.books.details.mvp.BookDetailsMvpActivity
 import com.jubee.bookstore.ui.adapter.BookAdapter
+import com.jubee.bookstore.ui.fragment.AbstractFragment
 import com.jubee.bookstore.ui.fragment.books.list.mvvm.BOOK_ID_EXTRA
-import moxy.MvpAppCompatFragment
-import moxy.presenter.InjectPresenter
+import moxy.ktx.moxyPresenter
 
-class BookListMvpFragment : MvpAppCompatFragment(), BookListView {
+class BookListMvpFragment : AbstractFragment<BookListPresenter>(), BookListView {
 
-    @InjectPresenter
-    lateinit var bookListPresenter: BookListPresenter
+    private val bookListPresenter by moxyPresenter { presenterProvider.get() }
 
     private lateinit var binding: FragmentBookListBinding
 
@@ -32,6 +32,10 @@ class BookListMvpFragment : MvpAppCompatFragment(), BookListView {
             bookItemClicked(bookItem)
         }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        BookstoreApplication.instance.appComponent.inject(this)
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

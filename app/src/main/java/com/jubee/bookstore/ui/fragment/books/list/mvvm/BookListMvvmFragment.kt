@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import com.jubee.bookstore.R
+import com.jubee.bookstore.app.BookstoreApplication
 import com.jubee.bookstore.databinding.FragmentBookListBinding
 import com.jubee.bookstore.dto.BookDto
 import com.jubee.bookstore.etc.BookstoreError
@@ -30,6 +31,11 @@ class BookListMvvmFragment : Fragment() {
         BookAdapter { bookItem: BookDto ->
             bookItemClicked(bookItem)
         }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        BookstoreApplication.instance.appComponent.inject(this)
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
