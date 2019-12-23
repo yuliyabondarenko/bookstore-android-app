@@ -1,6 +1,5 @@
 package com.jubee.bookstore.ui.fragment.books.list.mvp
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,15 +14,16 @@ import com.jubee.bookstore.dto.BookDto
 import com.jubee.bookstore.etc.BookstoreError
 import com.jubee.bookstore.mvp.books.list.BookListPresenter
 import com.jubee.bookstore.mvp.books.list.view.BookListView
-import com.jubee.bookstore.ui.activity.books.details.mvp.BookDetailsMvpActivity
+import com.jubee.bookstore.ui.fragment.books.details.mvp.BookDetailsMvpFragment
 import com.jubee.bookstore.ui.adapter.BookAdapter
 import com.jubee.bookstore.ui.fragment.AbstractFragment
 import com.jubee.bookstore.ui.fragment.books.list.mvvm.BOOK_ID_EXTRA
 import moxy.ktx.moxyPresenter
 
+
 class BookListMvpFragment : AbstractFragment<BookListPresenter>(), BookListView {
 
-    private val bookListPresenter by moxyPresenter { presenterProvider.get() }
+    private val presenter by moxyPresenter { presenterProvider.get() }
 
     private lateinit var binding: FragmentBookListBinding
 
@@ -47,7 +47,7 @@ class BookListMvpFragment : AbstractFragment<BookListPresenter>(), BookListView 
         binding.bookRecyclerView.itemAnimator = DefaultItemAnimator()
         binding.bookRecyclerView.adapter = adapter
 
-        binding.swipeRefresh.setOnRefreshListener { bookListPresenter.onRefreshBooks() }
+        binding.swipeRefresh.setOnRefreshListener { presenter.onRefreshBooks() }
         return binding.root
     }
 
@@ -72,10 +72,11 @@ class BookListMvpFragment : AbstractFragment<BookListPresenter>(), BookListView 
     }
 
     private fun bookItemClicked(bookItem: BookDto) {
-        val intent = Intent(activity, BookDetailsMvpActivity::class.java)
-            .apply {
-                putExtra(BOOK_ID_EXTRA, bookItem.id)
-            }
-        startActivity(intent)
+        val transaction = activity!!.supportFragmentManager.beginTransaction()
+        val fragment = BookDetailsMvpFragment().apply {
+            arguments = Bundle().apply { putLong(BOOK_ID_EXTRA, bookItem.id) }
+        }
+        transaction.replace(R.id.mainFragmentContainer, fragment)
+        transaction.commit()
     }
 }

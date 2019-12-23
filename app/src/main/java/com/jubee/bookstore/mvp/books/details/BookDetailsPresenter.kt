@@ -6,9 +6,15 @@ import com.jubee.bookstore.mvp.books.details.view.BookDetailsView
 import com.jubee.bookstore.service.NetworkService
 import kotlinx.coroutines.launch
 import moxy.InjectViewState
+import javax.inject.Inject
 
 @InjectViewState
-class BookDetailsPresenter(private val bookId: Long) : AbstractPresenter<BookDetailsView>() {
+class BookDetailsPresenter @Inject constructor() : AbstractPresenter<BookDetailsView>() {
+    private var bookId: Long = 0
+
+    fun init(bookId: Long) {
+        this.bookId = bookId
+    }
 
     override fun onFirstViewAttach() {
         loadBook()

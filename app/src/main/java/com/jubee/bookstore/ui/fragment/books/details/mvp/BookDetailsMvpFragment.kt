@@ -1,36 +1,44 @@
-package com.jubee.bookstore.ui.activity.books.details.mvp
+package com.jubee.bookstore.ui.fragment.books.details.mvp
 
 import android.os.Bundle
-import android.view.MenuItem
-import androidx.databinding.DataBindingUtil.setContentView
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import com.jubee.bookstore.R
+import com.jubee.bookstore.app.BookstoreApplication
 import com.jubee.bookstore.databinding.ActivityBookDetailsBinding
 import com.jubee.bookstore.dto.BookDto
 import com.jubee.bookstore.etc.BookstoreError
 import com.jubee.bookstore.mvp.books.details.BookDetailsPresenter
 import com.jubee.bookstore.mvp.books.details.view.BookDetailsView
+import com.jubee.bookstore.ui.fragment.AbstractFragment
 import com.jubee.bookstore.ui.fragment.books.list.mvvm.BOOK_ID_EXTRA
-import moxy.MvpAppCompatActivity
-import moxy.presenter.InjectPresenter
-import moxy.presenter.ProvidePresenter
+import moxy.ktx.moxyPresenter
 
 
-class BookDetailsMvpActivity : MvpAppCompatActivity(), BookDetailsView {
+class BookDetailsMvpFragment : AbstractFragment<BookDetailsPresenter>(), BookDetailsView {
 
-    @InjectPresenter
-    lateinit var bookDetailsPresenter: BookDetailsPresenter
-
-    @ProvidePresenter
-    fun provideBookDetailsPresenter(): BookDetailsPresenter {
-        return BookDetailsPresenter(intent.getLongExtra(BOOK_ID_EXTRA, 0))
+    private val presenter by moxyPresenter {
+        val bookId = this.arguments!!.getLong(BOOK_ID_EXTRA)
+        presenterProvider.get().apply { init(bookId) }
     }
 
     private lateinit var binding: ActivityBookDetailsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        BookstoreApplication.instance.appComponent.inject(this)
         super.onCreate(savedInstanceState)
-        binding = setContentView(this, R.layout.activity_book_details)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.activity_book_details, container, false)
+        return binding.root
     }
 
     override fun displayBook(book: BookDto) {
@@ -51,15 +59,5 @@ class BookDetailsMvpActivity : MvpAppCompatActivity(), BookDetailsView {
 
     override fun stopLoadProgress() {
         binding.isLoading = false
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> {
-                finish()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
     }
 }

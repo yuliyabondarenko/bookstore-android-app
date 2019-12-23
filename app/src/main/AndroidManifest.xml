@@ -21,9 +21,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.activity.books.details.mvvm.BookDetailsMvvmActivity" />
-        <activity android:name=".ui.activity.books.details.mvp.BookDetailsMvpActivity" />
-        <activity android:name=".ui.fragment.books.list.mvvm.BookListMvvmFragment" />
-        <activity android:name=".ui.fragment.books.list.mvp.BookListMvpFragment" />
     </application>
 
 </manifest>

@@ -13,9 +13,4 @@ class NetworkModule {
     fun provideBookApi(): BookApi {
         return NetworkService.bookApi
     }
-
-    @Provides
-    fun provideBookDetailsPresenter(presenter: BookDetailsPresenter) : BookDetailsPresenter {
-        return presenter
-    }
 }
