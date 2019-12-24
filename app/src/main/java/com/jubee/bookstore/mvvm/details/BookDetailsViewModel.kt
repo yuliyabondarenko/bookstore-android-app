@@ -1,17 +1,20 @@
 package com.jubee.bookstore.mvvm.details
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import com.jubee.bookstore.api.BookApi
 import com.jubee.bookstore.dto.BookDto
 import com.jubee.bookstore.etc.BookstoreError
-import com.jubee.bookstore.service.NetworkService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class BookDetailsViewModel(bookId: Long) : ViewModel() {
+class BookDetailsViewModel(private val bookApi: BookApi) : ViewModel() {
+
+    private var bookId: Long = 0
+
+    fun init(bookId: Long) {
+        this.bookId = bookId
+    }
 
     private val _bookLiveData: MutableLiveData<BookDto> by lazy {
         MutableLiveData<BookDto>().also { loadBook(bookId) }
@@ -35,7 +38,7 @@ class BookDetailsViewModel(bookId: Long) : ViewModel() {
         _errorLiveData.value = BookstoreError(false)
         this.viewModelScope.launch(Dispatchers.Main) {
             try {
-                _bookLiveData.value = NetworkService.bookApi.getBook(bookId)
+                _bookLiveData.value = bookApi.getBook(bookId)
             } catch (e: Exception) {
                 val errorMsg = "Load book failed"
                 _errorLiveData.value = BookstoreError(true, errorMsg)
@@ -43,6 +46,13 @@ class BookDetailsViewModel(bookId: Long) : ViewModel() {
             } finally {
                 _isLoadingLiveData.value = false
             }
+        }
+    }
+
+    class Factory(val bookApi: BookApi) : ViewModelProvider.Factory {
+
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+            return BookDetailsViewModel(bookApi) as T
         }
     }
 }

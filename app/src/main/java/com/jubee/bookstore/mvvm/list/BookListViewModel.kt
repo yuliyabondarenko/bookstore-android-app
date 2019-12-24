@@ -5,14 +5,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.jubee.bookstore.api.BookApi
 import com.jubee.bookstore.dto.BookDto
 import com.jubee.bookstore.etc.BookstoreError
-import com.jubee.bookstore.service.NetworkService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
-class BookListViewModel : ViewModel() {
+class BookListViewModel @Inject constructor(private val bookApi: BookApi): ViewModel() {
 
     private val _booksLiveData: MutableLiveData<List<BookDto>> by lazy {
         MutableLiveData<List<BookDto>>().also {
@@ -38,7 +39,7 @@ class BookListViewModel : ViewModel() {
         _errorLiveData.value = BookstoreError(false)
         this.viewModelScope.launch(Dispatchers.Main) {
             try {
-                val response = NetworkService.bookApi.getBookList()
+                val response = bookApi.getBookList()
                 _booksLiveData.value = response._embedded.books
             } catch (e: Exception) {
                 val errorMsg = "Load books failed"

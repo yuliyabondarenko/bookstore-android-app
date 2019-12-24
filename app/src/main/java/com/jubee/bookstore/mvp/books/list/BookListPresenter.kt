@@ -1,14 +1,17 @@
 package com.jubee.bookstore.mvp.books.list
 
 import android.util.Log
+import com.jubee.bookstore.api.BookApi
 import com.jubee.bookstore.mvp.AbstractPresenter
 import com.jubee.bookstore.mvp.books.list.view.BookListView
-import com.jubee.bookstore.service.NetworkService
 import kotlinx.coroutines.launch
 import moxy.InjectViewState
+import javax.inject.Inject
 
 @InjectViewState
-class BookListPresenter : AbstractPresenter<BookListView>() {
+class BookListPresenter @Inject constructor(
+    private val bookApi: BookApi
+) : AbstractPresenter<BookListView>() {
 
     override fun onFirstViewAttach() {
         loadBooks()
@@ -22,7 +25,7 @@ class BookListPresenter : AbstractPresenter<BookListView>() {
         viewState.startLoadProgress()
         viewState.cleanError()
         try {
-            val response = NetworkService.bookApi.getBookList()
+            val response = bookApi.getBookList()
             viewState.displayBooks(response._embedded.books)
         } catch (e: Exception) {
             val errorMsg = "Load books failed"

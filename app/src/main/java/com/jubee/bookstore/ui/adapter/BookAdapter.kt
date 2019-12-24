@@ -14,13 +14,13 @@ class BookAdapter(
 ) :
     RecyclerView.Adapter<BookAdapter.BookItemViewHolder>() {
 
-    var data = mutableListOf<BookDto>()
+    var books = mutableListOf<BookDto>()
         set(value) {
             field = value
             notifyDataSetChanged()
         }
 
-    override fun getItemCount() = data.size
+    override fun getItemCount() = books.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookItemViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -29,7 +29,7 @@ class BookAdapter(
     }
 
     override fun onBindViewHolder(holder: BookItemViewHolder, position: Int) {
-        val bookItem = data[position]
+        val bookItem = books[position]
         holder.binding.book = bookItem
         Glide.with(holder.itemView).load(bookItem.photo).into(holder.binding.bookImage)
         holder.itemView.setOnClickListener { clickListener(bookItem) }
