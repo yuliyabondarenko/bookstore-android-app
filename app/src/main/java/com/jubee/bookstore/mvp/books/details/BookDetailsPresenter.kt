@@ -1,15 +1,15 @@
 package com.jubee.bookstore.mvp.books.details
 
 import android.util.Log
+import com.jubee.bookstore.api.BookApi
 import com.jubee.bookstore.mvp.AbstractPresenter
 import com.jubee.bookstore.mvp.books.details.view.BookDetailsView
-import com.jubee.bookstore.service.NetworkService
 import kotlinx.coroutines.launch
 import moxy.InjectViewState
 import javax.inject.Inject
 
 @InjectViewState
-class BookDetailsPresenter @Inject constructor() : AbstractPresenter<BookDetailsView>() {
+class BookDetailsPresenter @Inject constructor(private val bookApi: BookApi) : AbstractPresenter<BookDetailsView>() {
     private var bookId: Long = 0
 
     fun init(bookId: Long) {
@@ -24,7 +24,7 @@ class BookDetailsPresenter @Inject constructor() : AbstractPresenter<BookDetails
         viewState.startLoadProgress()
         viewState.cleanError()
         try {
-            val response = NetworkService.bookApi.getBook(bookId)
+            val response = bookApi.getBook(bookId)
             viewState.displayBook(response)
         } catch (e: Exception) {
             val errorMsg = "Load book failed"
