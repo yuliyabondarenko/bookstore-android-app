@@ -20,6 +20,8 @@ class MainActivity : FragmentActivity(), NavigationView.OnNavigationItemSelected
         setContentView(R.layout.activity_main)
 
         navigationView.setNavigationItemSelectedListener(this)
+
+        displayFragment(BookListMvvmFragment())
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -28,7 +30,6 @@ class MainActivity : FragmentActivity(), NavigationView.OnNavigationItemSelected
             R.id.bookListMvp -> displayFragment(BookListMvpFragment())
         }
         return super.onOptionsItemSelected(item)
-
     }
 
     private fun displayFragment(fragment: Fragment) {
