@@ -1,4 +1,4 @@
-package com.jubee.bookstore.ui.activity.books.details.mvvm
+package com.jubee.bookstore.ui.fragment.books.details.mvvm
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

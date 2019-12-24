@@ -1,6 +1,5 @@
 package com.jubee.bookstore.ui.fragment.books.list.mvvm
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +16,7 @@ import com.jubee.bookstore.databinding.FragmentBookListBinding
 import com.jubee.bookstore.dto.BookDto
 import com.jubee.bookstore.etc.BookstoreError
 import com.jubee.bookstore.mvvm.list.BookListViewModel
-import com.jubee.bookstore.ui.activity.books.details.mvvm.BookDetailsMvvmActivity
+import com.jubee.bookstore.ui.fragment.books.details.mvvm.BookDetailsMvvmFragment
 import com.jubee.bookstore.ui.adapter.BookAdapter
 
 
@@ -69,11 +68,12 @@ class BookListMvvmFragment : Fragment() {
 
 
     private fun bookItemClicked(bookItem: BookDto) {
-        val intent = Intent(activity, BookDetailsMvvmActivity::class.java)
-            .apply {
-                putExtra(BOOK_ID_EXTRA, bookItem.id)
-            }
-        startActivity(intent)
+        val transaction = activity!!.supportFragmentManager.beginTransaction()
+        val fragment = BookDetailsMvvmFragment().apply {
+            arguments = Bundle().apply { putLong(BOOK_ID_EXTRA, bookItem.id) }
+        }
+        transaction.replace(R.id.mainFragmentContainer, fragment)
+        transaction.commit()
     }
 
 }
