@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import com.jubee.bookstore.R
@@ -18,11 +17,15 @@ import com.jubee.bookstore.etc.BookstoreError
 import com.jubee.bookstore.mvvm.list.BookListViewModel
 import com.jubee.bookstore.ui.fragment.books.details.mvvm.BookDetailsMvvmFragment
 import com.jubee.bookstore.ui.adapter.BookAdapter
+import javax.inject.Inject
 
 
 const val BOOK_ID_EXTRA = "com.jubee.bookstore.ui.fragment.books.list.mvvm.BOOK_ID_EXTRA"
 
 class BookListMvvmFragment : Fragment() {
+
+    @Inject
+    lateinit var bookListViewModel: BookListViewModel
 
     private lateinit var binding: FragmentBookListBinding
 
@@ -46,11 +49,15 @@ class BookListMvvmFragment : Fragment() {
         binding.bookRecyclerView.adapter = adapter
         binding.bookRecyclerView.layoutManager = GridLayoutManager(this.context, 2)
         binding.bookRecyclerView.itemAnimator = DefaultItemAnimator()
+        binding.swipeRefresh.setOnRefreshListener { bookListViewModel.refresh() }
 
-        val bookListViewModel = ViewModelProviders.of(this)[BookListViewModel::class.java]
+        setUpObservers(bookListViewModel)
+        return binding.root
+    }
 
+    private fun setUpObservers(bookListViewModel: BookListViewModel) {
         bookListViewModel.booksLiveData.observe(this, Observer<List<BookDto>> { books ->
-            adapter.data = books.toMutableList()
+            adapter.books = books.toMutableList()
         })
 
         bookListViewModel.isLoadingLiveData.observe(this, Observer<Boolean> { isLoading ->
@@ -60,10 +67,6 @@ class BookListMvvmFragment : Fragment() {
         bookListViewModel.errorLiveData.observe(this, Observer<BookstoreError> { error ->
             binding.error = error
         })
-
-        binding.swipeRefresh.setOnRefreshListener { bookListViewModel.refresh() }
-
-        return binding.root
     }
 
 

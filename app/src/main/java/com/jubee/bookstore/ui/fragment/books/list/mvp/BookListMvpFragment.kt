@@ -60,7 +60,7 @@ class BookListMvpFragment : AbstractFragment<BookListPresenter>(), BookListView 
     }
 
     override fun displayBooks(books: List<BookDto>) {
-        adapter.data = books.toMutableList()
+        adapter.books = books.toMutableList()
     }
 
     override fun showError(errorMsg: String) {
