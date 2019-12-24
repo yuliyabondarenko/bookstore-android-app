@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
-class BookListViewModel @Inject constructor(private var bookApi: BookApi): ViewModel() {
+class BookListViewModel @Inject constructor(private val bookApi: BookApi): ViewModel() {
 
     private val _booksLiveData: MutableLiveData<List<BookDto>> by lazy {
         MutableLiveData<List<BookDto>>().also {

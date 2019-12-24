@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 @InjectViewState
 class BookListPresenter @Inject constructor(
-    private var bookApi: BookApi
+    private val bookApi: BookApi
 ) : AbstractPresenter<BookListView>() {
 
     override fun onFirstViewAttach() {
