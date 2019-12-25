@@ -1,10 +1,10 @@
-package com.jubee.bookstore.mvp.books.list
+package com.jubee.bookstore.presentation.mvp.books.list
 
 import com.jubee.bookstore.domain.Failure
 import com.jubee.bookstore.domain.Success
 import com.jubee.bookstore.domain.usecase.BookListUseCase
-import com.jubee.bookstore.mvp.AbstractPresenter
-import com.jubee.bookstore.mvp.books.list.view.BookListView
+import com.jubee.bookstore.presentation.mvp.AbstractPresenter
+import com.jubee.bookstore.presentation.mvp.books.list.view.BookListView
 import kotlinx.coroutines.launch
 import moxy.InjectViewState
 import javax.inject.Inject

@@ -11,9 +11,9 @@ import com.jubee.bookstore.R
 import com.jubee.bookstore.app.BookstoreApplication
 import com.jubee.bookstore.databinding.FragmentBookListBinding
 import com.jubee.bookstore.dto.BookDto
-import com.jubee.bookstore.etc.BookstoreError
-import com.jubee.bookstore.mvp.books.list.BookListPresenter
-import com.jubee.bookstore.mvp.books.list.view.BookListView
+import com.jubee.bookstore.presentation.ErrorPresence
+import com.jubee.bookstore.presentation.mvp.books.list.BookListPresenter
+import com.jubee.bookstore.presentation.mvp.books.list.view.BookListView
 import com.jubee.bookstore.ui.fragment.books.details.mvp.BookDetailsMvpFragment
 import com.jubee.bookstore.ui.adapter.BookAdapter
 import com.jubee.bookstore.ui.fragment.AbstractFragment
@@ -64,11 +64,11 @@ class BookListMvpFragment : AbstractFragment<BookListPresenter>(), BookListView 
     }
 
     override fun showError(errorMsg: String) {
-        binding.error = BookstoreError(true, errorMsg)
+        binding.error = ErrorPresence(true, errorMsg)
     }
 
     override fun cleanError() {
-        binding.error = BookstoreError(false)
+        binding.error = ErrorPresence(false)
     }
 
     private fun bookItemClicked(bookItem: BookDto) {

@@ -1,4 +1,4 @@
-package com.jubee.bookstore.service
+package com.jubee.bookstore.network
 
 import com.jubee.bookstore.BuildConfig
 import com.jubee.bookstore.api.BookApi

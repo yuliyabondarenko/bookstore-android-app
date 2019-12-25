@@ -1,10 +1,10 @@
-package com.jubee.bookstore.mvvm.books.details
+package com.jubee.bookstore.presentation.mvvm.books.details
 
 import android.util.Log
 import androidx.lifecycle.*
 import com.jubee.bookstore.api.BookApi
 import com.jubee.bookstore.dto.BookDto
-import com.jubee.bookstore.etc.BookstoreError
+import com.jubee.bookstore.presentation.ErrorPresence
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -28,20 +28,20 @@ class BookDetailsViewModel(private val bookApi: BookApi) : ViewModel() {
     val isLoadingLiveData: LiveData<Boolean>
         get() = _isLoadingLiveData
 
-    private val _errorLiveData: MutableLiveData<BookstoreError> = MutableLiveData()
+    private val _errorPresenceLiveData: MutableLiveData<ErrorPresence> = MutableLiveData()
 
-    val errorLiveData: LiveData<BookstoreError>
-        get() = _errorLiveData
+    val errorPresenceLiveData: LiveData<ErrorPresence>
+        get() = _errorPresenceLiveData
 
     private fun loadBook(bookId: Long) {
         _isLoadingLiveData.value = true
-        _errorLiveData.value = BookstoreError(false)
+        _errorPresenceLiveData.value = ErrorPresence(false)
         this.viewModelScope.launch(Dispatchers.Main) {
             try {
                 _bookLiveData.value = bookApi.getBook(bookId)
             } catch (e: Exception) {
                 val errorMsg = "Load book failed"
-                _errorLiveData.value = BookstoreError(true, errorMsg)
+                _errorPresenceLiveData.value = ErrorPresence(true, errorMsg)
                 Log.e("JB/error", errorMsg, e)
             } finally {
                 _isLoadingLiveData.value = false

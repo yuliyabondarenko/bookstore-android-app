@@ -1,9 +1,9 @@
-package com.jubee.bookstore.mvp.books.details
+package com.jubee.bookstore.presentation.mvp.books.details
 
 import android.util.Log
 import com.jubee.bookstore.api.BookApi
-import com.jubee.bookstore.mvp.AbstractPresenter
-import com.jubee.bookstore.mvp.books.details.view.BookDetailsView
+import com.jubee.bookstore.presentation.mvp.AbstractPresenter
+import com.jubee.bookstore.presentation.mvp.books.details.view.BookDetailsView
 import kotlinx.coroutines.launch
 import moxy.InjectViewState
 import javax.inject.Inject

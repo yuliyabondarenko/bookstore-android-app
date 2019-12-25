@@ -9,9 +9,9 @@ import com.jubee.bookstore.R
 import com.jubee.bookstore.app.BookstoreApplication
 import com.jubee.bookstore.databinding.FragmentBookDetailsBinding
 import com.jubee.bookstore.dto.BookDto
-import com.jubee.bookstore.etc.BookstoreError
-import com.jubee.bookstore.mvp.books.details.BookDetailsPresenter
-import com.jubee.bookstore.mvp.books.details.view.BookDetailsView
+import com.jubee.bookstore.presentation.ErrorPresence
+import com.jubee.bookstore.presentation.mvp.books.details.BookDetailsPresenter
+import com.jubee.bookstore.presentation.mvp.books.details.view.BookDetailsView
 import com.jubee.bookstore.ui.fragment.AbstractFragment
 import com.jubee.bookstore.ui.fragment.books.list.mvvm.BOOK_ID_EXTRA
 import moxy.ktx.moxyPresenter
@@ -46,11 +46,11 @@ class BookDetailsMvpFragment : AbstractFragment<BookDetailsPresenter>(), BookDet
     }
 
     override fun showError(errorMsg: String) {
-        binding.error = BookstoreError(true, errorMsg)
+        binding.error = ErrorPresence(true, errorMsg)
     }
 
     override fun cleanError() {
-        binding.error = BookstoreError(false)
+        binding.error = ErrorPresence(false)
     }
 
     override fun startLoadProgress() {
