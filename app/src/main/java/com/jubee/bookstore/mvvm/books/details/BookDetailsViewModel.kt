@@ -1,28 +1,27 @@
-package com.jubee.bookstore.mvvm.list
+package com.jubee.bookstore.mvvm.books.details
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.jubee.bookstore.api.BookApi
 import com.jubee.bookstore.dto.BookDto
 import com.jubee.bookstore.etc.BookstoreError
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
+class BookDetailsViewModel(private val bookApi: BookApi) : ViewModel() {
 
-class BookListViewModel @Inject constructor(private val bookApi: BookApi): ViewModel() {
+    private var bookId: Long = 0
 
-    private val _booksLiveData: MutableLiveData<List<BookDto>> by lazy {
-        MutableLiveData<List<BookDto>>().also {
-            loadBooks()
-        }
+    fun init(bookId: Long) {
+        this.bookId = bookId
     }
 
-    val booksLiveData: LiveData<List<BookDto>>
-        get() = _booksLiveData
+    private val _bookLiveData: MutableLiveData<BookDto> by lazy {
+        MutableLiveData<BookDto>().also { loadBook(bookId) }
+    }
+
+    val bookLiveData: LiveData<BookDto>
+        get() = _bookLiveData
 
     private val _isLoadingLiveData: MutableLiveData<Boolean> = MutableLiveData()
 
@@ -34,15 +33,14 @@ class BookListViewModel @Inject constructor(private val bookApi: BookApi): ViewM
     val errorLiveData: LiveData<BookstoreError>
         get() = _errorLiveData
 
-    private fun loadBooks() {
+    private fun loadBook(bookId: Long) {
         _isLoadingLiveData.value = true
         _errorLiveData.value = BookstoreError(false)
         this.viewModelScope.launch(Dispatchers.Main) {
             try {
-                val response = bookApi.getBookList()
-                _booksLiveData.value = response._embedded.books
+                _bookLiveData.value = bookApi.getBook(bookId)
             } catch (e: Exception) {
-                val errorMsg = "Load books failed"
+                val errorMsg = "Load book failed"
                 _errorLiveData.value = BookstoreError(true, errorMsg)
                 Log.e("JB/error", errorMsg, e)
             } finally {
@@ -51,7 +49,10 @@ class BookListViewModel @Inject constructor(private val bookApi: BookApi): ViewM
         }
     }
 
-    fun refresh() {
-        loadBooks()
+    class Factory(val bookApi: BookApi) : ViewModelProvider.Factory {
+
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+            return BookDetailsViewModel(bookApi) as T
+        }
     }
 }

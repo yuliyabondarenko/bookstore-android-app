@@ -14,7 +14,7 @@ import com.jubee.bookstore.app.BookstoreApplication
 import com.jubee.bookstore.databinding.FragmentBookListBinding
 import com.jubee.bookstore.dto.BookDto
 import com.jubee.bookstore.etc.BookstoreError
-import com.jubee.bookstore.mvvm.list.BookListViewModel
+import com.jubee.bookstore.mvvm.books.list.BookListViewModel
 import com.jubee.bookstore.ui.fragment.books.details.mvvm.BookDetailsMvvmFragment
 import com.jubee.bookstore.ui.adapter.BookAdapter
 import javax.inject.Inject
