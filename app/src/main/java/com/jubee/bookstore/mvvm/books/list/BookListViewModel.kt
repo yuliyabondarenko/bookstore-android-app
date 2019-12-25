@@ -1,11 +1,12 @@
 package com.jubee.bookstore.mvvm.books.list
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jubee.bookstore.api.BookApi
+import com.jubee.bookstore.domain.Failure
+import com.jubee.bookstore.domain.Success
+import com.jubee.bookstore.domain.usecase.BookListUseCase
 import com.jubee.bookstore.dto.BookDto
 import com.jubee.bookstore.etc.BookstoreError
 import kotlinx.coroutines.Dispatchers
@@ -13,7 +14,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
-class BookListViewModel @Inject constructor(private val bookApi: BookApi): ViewModel() {
+class BookListViewModel @Inject constructor(private val bookListUseCase: BookListUseCase) :
+    ViewModel() {
 
     private val _booksLiveData: MutableLiveData<List<BookDto>> by lazy {
         MutableLiveData<List<BookDto>>().also {
@@ -38,16 +40,12 @@ class BookListViewModel @Inject constructor(private val bookApi: BookApi): ViewM
         _isLoadingLiveData.value = true
         _errorLiveData.value = BookstoreError(false)
         this.viewModelScope.launch(Dispatchers.Main) {
-            try {
-                val response = bookApi.getBookList()
-                _booksLiveData.value = response._embedded.books
-            } catch (e: Exception) {
-                val errorMsg = "Load books failed"
-                _errorLiveData.value = BookstoreError(true, errorMsg)
-                Log.e("JB/error", errorMsg, e)
-            } finally {
-                _isLoadingLiveData.value = false
+            when (val result = bookListUseCase.getBookList()) {
+                is Success -> _booksLiveData.value = result.data
+                is Failure -> _errorLiveData.value =
+                    BookstoreError(true, "Load books failed. " + result.errorMsg)
             }
+            _isLoadingLiveData.value = false
         }
     }
 
