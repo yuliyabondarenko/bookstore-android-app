@@ -1,7 +1,8 @@
 package com.jubee.bookstore.presentation.mvp.books.details
 
-import android.util.Log
-import com.jubee.bookstore.api.BookApi
+import com.jubee.bookstore.domain.Failure
+import com.jubee.bookstore.domain.Success
+import com.jubee.bookstore.domain.usecase.BookDetailsUseCase
 import com.jubee.bookstore.presentation.mvp.AbstractPresenter
 import com.jubee.bookstore.presentation.mvp.books.details.view.BookDetailsView
 import kotlinx.coroutines.launch
@@ -9,7 +10,8 @@ import moxy.InjectViewState
 import javax.inject.Inject
 
 @InjectViewState
-class BookDetailsPresenter @Inject constructor(private val bookApi: BookApi) : AbstractPresenter<BookDetailsView>() {
+class BookDetailsPresenter @Inject constructor(private val bookDetailsUseCase: BookDetailsUseCase) :
+    AbstractPresenter<BookDetailsView>() {
     private var bookId: Long = 0
 
     fun init(bookId: Long) {
@@ -23,15 +25,10 @@ class BookDetailsPresenter @Inject constructor(private val bookApi: BookApi) : A
     private fun loadBook() = launch {
         viewState.startLoadProgress()
         viewState.cleanError()
-        try {
-            val response = bookApi.getBook(bookId)
-            viewState.displayBook(response)
-        } catch (e: Exception) {
-            val errorMsg = "Load book failed"
-            viewState.showError(errorMsg)
-            Log.e("JB/error", errorMsg, e)
-        } finally {
-            viewState.stopLoadProgress()
+        when (val result = bookDetailsUseCase.getBookDetails(bookId)) {
+            is Success -> viewState.displayBook(result.data)
+            is Failure -> viewState.showError(result.errorMsg)
         }
+        viewState.stopLoadProgress()
     }
 }

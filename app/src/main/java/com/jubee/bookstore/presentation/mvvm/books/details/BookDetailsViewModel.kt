@@ -1,14 +1,15 @@
 package com.jubee.bookstore.presentation.mvvm.books.details
 
-import android.util.Log
 import androidx.lifecycle.*
-import com.jubee.bookstore.api.BookApi
+import com.jubee.bookstore.domain.Failure
+import com.jubee.bookstore.domain.Success
+import com.jubee.bookstore.domain.usecase.BookDetailsUseCase
 import com.jubee.bookstore.dto.BookDto
 import com.jubee.bookstore.presentation.ErrorPresence
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class BookDetailsViewModel(private val bookApi: BookApi) : ViewModel() {
+class BookDetailsViewModel(private val bookDetailsUseCase: BookDetailsUseCase) : ViewModel() {
 
     private var bookId: Long = 0
 
@@ -37,22 +38,18 @@ class BookDetailsViewModel(private val bookApi: BookApi) : ViewModel() {
         _isLoadingLiveData.value = true
         _errorPresenceLiveData.value = ErrorPresence(false)
         this.viewModelScope.launch(Dispatchers.Main) {
-            try {
-                _bookLiveData.value = bookApi.getBook(bookId)
-            } catch (e: Exception) {
-                val errorMsg = "Load book failed"
-                _errorPresenceLiveData.value = ErrorPresence(true, errorMsg)
-                Log.e("JB/error", errorMsg, e)
-            } finally {
-                _isLoadingLiveData.value = false
+            when (val result = bookDetailsUseCase.getBookDetails(bookId)) {
+                is Success -> _bookLiveData.value = result.data
+                is Failure -> _errorPresenceLiveData.value = ErrorPresence(true, result.errorMsg)
             }
         }
+        _isLoadingLiveData.value = false
     }
 
-    class Factory(val bookApi: BookApi) : ViewModelProvider.Factory {
+    class Factory(private val useCase: BookDetailsUseCase) : ViewModelProvider.Factory {
 
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return BookDetailsViewModel(bookApi) as T
+            return BookDetailsViewModel(useCase) as T
         }
     }
 }
