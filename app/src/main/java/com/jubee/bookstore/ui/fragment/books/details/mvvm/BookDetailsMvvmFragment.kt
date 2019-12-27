@@ -10,8 +10,8 @@ import androidx.lifecycle.ViewModelProviders
 import com.jubee.bookstore.R
 import com.jubee.bookstore.app.BookstoreApplication
 import com.jubee.bookstore.databinding.FragmentBookDetailsBinding
-import com.jubee.bookstore.etc.BookstoreError
-import com.jubee.bookstore.mvvm.books.details.BookDetailsViewModel
+import com.jubee.bookstore.presentation.ErrorPresence
+import com.jubee.bookstore.presentation.mvvm.books.details.BookDetailsViewModel
 import com.jubee.bookstore.ui.fragment.books.list.mvvm.BOOK_ID_EXTRA
 import moxy.MvpAppCompatFragment
 import javax.inject.Inject
@@ -57,7 +57,7 @@ class BookDetailsMvvmFragment : MvpAppCompatFragment() {
             binding.isLoading = isLoading
         })
 
-        bookViewModel.errorLiveData.observe(this, Observer<BookstoreError> { error ->
+        bookViewModel.errorPresenceLiveData.observe(this, Observer<ErrorPresence> { error ->
             binding.error = error
         })
     }

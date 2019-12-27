@@ -1,4 +1,4 @@
-package com.jubee.bookstore.mvp
+package com.jubee.bookstore.presentation.mvp
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

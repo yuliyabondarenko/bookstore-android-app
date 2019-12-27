@@ -1,4 +1,4 @@
-package com.jubee.bookstore.mvp.books.list.view
+package com.jubee.bookstore.presentation.mvp.books.details.view
 
 import com.jubee.bookstore.dto.BookDto
 import moxy.MvpView
@@ -6,9 +6,9 @@ import moxy.viewstate.strategy.AddToEndSingleStrategy
 import moxy.viewstate.strategy.StateStrategyType
 
 @StateStrategyType(AddToEndSingleStrategy::class)
-interface BookListView : MvpView {
+interface BookDetailsView : MvpView {
 
-    fun displayBooks(books: List<BookDto>)
+    fun displayBook(book: BookDto)
 
     fun showError(errorMsg: String)
 

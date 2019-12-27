@@ -1,7 +1,7 @@
 package com.jubee.bookstore.di.module
 
-import com.jubee.bookstore.api.BookApi
-import com.jubee.bookstore.mvvm.books.details.BookDetailsViewModel
+import com.jubee.bookstore.domain.usecase.BookDetailsUseCase
+import com.jubee.bookstore.presentation.mvvm.books.details.BookDetailsViewModel
 import dagger.Module
 import dagger.Provides
 
@@ -9,5 +9,5 @@ import dagger.Provides
 class ViewModelModule {
 
     @Provides
-    fun provideBookDetailsViewModelFactory(bookApi: BookApi) = BookDetailsViewModel.Factory(bookApi)
+    fun provideBookDetailsViewModelFactory(useCase: BookDetailsUseCase) = BookDetailsViewModel.Factory(useCase)
 }

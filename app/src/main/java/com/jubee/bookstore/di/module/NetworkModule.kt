@@ -1,8 +1,7 @@
 package com.jubee.bookstore.di.module
 
 import com.jubee.bookstore.api.BookApi
-import com.jubee.bookstore.mvp.books.details.BookDetailsPresenter
-import com.jubee.bookstore.service.NetworkService
+import com.jubee.bookstore.network.NetworkService
 import dagger.Module
 import dagger.Provides
 

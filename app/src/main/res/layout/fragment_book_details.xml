@@ -17,7 +17,7 @@
 
         <variable
             name="error"
-            type="com.jubee.bookstore.etc.BookstoreError" />
+            type="com.jubee.bookstore.presentation.ErrorPresence" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
