@@ -12,4 +12,7 @@ interface BookDao {
 
     @Query("SELECT * FROM book WHERE id=:id ")
     fun getBookById(id: Long): BookEntity
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(books: List<BookEntity>)
 }

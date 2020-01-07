@@ -10,16 +10,14 @@ data class BookEntity(
     val id: Long = 0,
 
     @ColumnInfo(name = "name")
-    var name: String?,
+    val name: String?,
 
     @ColumnInfo(name = "photo")
-    var photo: String? = null,
+    val photo: String? = null,
 
     @ColumnInfo(name = "absent")
-    var absent: Boolean = false,
+    val absent: Boolean = false,
 
     @ColumnInfo(name = "price")
-    var price: Double?
-) {
-    constructor() : this(0, null, null, false, null)
-}
+    val price: Double?
+)
