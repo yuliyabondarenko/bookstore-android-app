@@ -3,13 +3,12 @@ package com.jubee.bookstore.dto
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-
 data class BookDto(
     val id: Long = 0,
 
     @SerializedName("name")
     @Expose
-    var name: String,
+    var name: String?,
 
     @SerializedName("photo")
     @Expose
@@ -21,5 +20,7 @@ data class BookDto(
 
     @SerializedName("price")
     @Expose
-    var price: Double
-)
+    var price: Double?
+) {
+    constructor() : this(0, null, null, false, null)
+}

@@ -43,7 +43,7 @@ class BookListViewModel @Inject constructor(private val bookListUseCase: BookLis
             when (val result = bookListUseCase.getBookList()) {
                 is Success -> _booksLiveData.value = result.data
                 is Failure -> _errorPresenceLiveData.value =
-                    ErrorPresence(true, "Load books failed. " + result.errorMsg)
+                    ErrorPresence(true, "Load books failed. " + result.error.message)
             }
             _isLoadingLiveData.value = false
         }

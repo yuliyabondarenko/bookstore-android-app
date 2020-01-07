@@ -1,5 +1,6 @@
 package com.jubee.bookstore.di
 
+import com.jubee.bookstore.di.module.ConverterModule
 import com.jubee.bookstore.di.module.NetworkModule
 import com.jubee.bookstore.di.module.PersistenceModule
 import com.jubee.bookstore.di.module.ViewModelModule
@@ -16,7 +17,9 @@ import javax.inject.Singleton
     modules = [
         ViewModelModule::class,
         NetworkModule::class,
-        PersistenceModule::class]
+        PersistenceModule::class,
+        ConverterModule::class
+    ]
 )
 interface ApplicationComponent {
     fun inject(activity: MainActivity)

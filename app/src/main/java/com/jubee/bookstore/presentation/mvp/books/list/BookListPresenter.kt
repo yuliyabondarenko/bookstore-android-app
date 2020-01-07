@@ -27,7 +27,7 @@ class BookListPresenter @Inject constructor(
         viewState.cleanError()
         when (val result = bookListUseCase.getBookList()) {
             is Success -> viewState.displayBooks(result.data)
-            is Failure -> viewState.showError("Load books failed. " + result.errorMsg)
+            is Failure -> viewState.showError("Load books failed. " + result.error.message)
         }
         viewState.stopLoadProgress()
     }
