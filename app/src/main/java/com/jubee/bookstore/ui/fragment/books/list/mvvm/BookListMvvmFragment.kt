@@ -71,12 +71,14 @@ class BookListMvvmFragment : Fragment() {
 
 
     private fun bookItemClicked(bookItem: BookDto) {
-        val transaction = activity!!.supportFragmentManager.beginTransaction()
         val fragment = BookDetailsMvvmFragment().apply {
             arguments = Bundle().apply { putLong(BOOK_ID_EXTRA, bookItem.id) }
         }
-        transaction.replace(R.id.mainFragmentContainer, fragment)
-        transaction.commit()
+        activity!!.supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.mainFragmentContainer, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 
 }
