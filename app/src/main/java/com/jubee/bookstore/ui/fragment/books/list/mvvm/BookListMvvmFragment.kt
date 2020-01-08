@@ -15,8 +15,9 @@ import com.jubee.bookstore.databinding.FragmentBookListBinding
 import com.jubee.bookstore.dto.BookDto
 import com.jubee.bookstore.presentation.ErrorPresence
 import com.jubee.bookstore.presentation.mvvm.books.list.BookListViewModel
-import com.jubee.bookstore.ui.fragment.books.details.mvvm.BookDetailsMvvmFragment
 import com.jubee.bookstore.ui.adapter.BookAdapter
+import com.jubee.bookstore.ui.fragment.books.details.mvvm.BookDetailsMvvmFragment
+import com.jubee.bookstore.ui.fragment.books.transition.setUpTransition
 import javax.inject.Inject
 
 
@@ -30,9 +31,7 @@ class BookListMvvmFragment : Fragment() {
     private lateinit var binding: FragmentBookListBinding
 
     private val adapter =
-        BookAdapter { bookItem: BookDto ->
-            bookItemClicked(bookItem)
-        }
+        BookAdapter { viewHolder, bookItem -> bookItemClicked(viewHolder, bookItem) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         BookstoreApplication.instance.appComponent.inject(this)
@@ -70,14 +69,16 @@ class BookListMvvmFragment : Fragment() {
     }
 
 
-    private fun bookItemClicked(bookItem: BookDto) {
+    private fun bookItemClicked(bookItem: BookDto, itemView: View) {
         val fragment = BookDetailsMvvmFragment().apply {
             arguments = Bundle().apply { putLong(BOOK_ID_EXTRA, bookItem.id) }
         }
+
         activity!!.supportFragmentManager
             .beginTransaction()
             .replace(R.id.mainFragmentContainer, fragment)
             .addToBackStack(null)
+            .setUpTransition(fragment, bookItem.id, itemView)
             .commit()
     }
 

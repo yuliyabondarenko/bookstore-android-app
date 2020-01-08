@@ -18,6 +18,7 @@ import com.jubee.bookstore.ui.fragment.books.details.mvp.BookDetailsMvpFragment
 import com.jubee.bookstore.ui.adapter.BookAdapter
 import com.jubee.bookstore.ui.fragment.AbstractFragment
 import com.jubee.bookstore.ui.fragment.books.list.mvvm.BOOK_ID_EXTRA
+import com.jubee.bookstore.ui.fragment.books.transition.setUpTransition
 import moxy.ktx.moxyPresenter
 
 
@@ -28,9 +29,7 @@ class BookListMvpFragment : AbstractFragment<BookListPresenter>(), BookListView 
     private lateinit var binding: FragmentBookListBinding
 
     private val adapter =
-        BookAdapter { bookItem: BookDto ->
-            bookItemClicked(bookItem)
-        }
+        BookAdapter { bookItem, itemView -> bookItemClicked(bookItem, itemView) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         BookstoreApplication.instance.appComponent.inject(this)
@@ -71,13 +70,16 @@ class BookListMvpFragment : AbstractFragment<BookListPresenter>(), BookListView 
         binding.error = ErrorPresence(false)
     }
 
-    private fun bookItemClicked(bookItem: BookDto) {
+    private fun bookItemClicked(bookItem: BookDto, itemView: View) {
         val fragment = BookDetailsMvpFragment().apply {
             arguments = Bundle().apply { putLong(BOOK_ID_EXTRA, bookItem.id) }
         }
+
         activity!!.supportFragmentManager
             .beginTransaction()
             .replace(R.id.mainFragmentContainer, fragment)
+            .addToBackStack(null)
+            .setUpTransition(fragment, bookItem.id, itemView)
             .commit()
     }
 }
