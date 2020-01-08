@@ -10,7 +10,7 @@ interface BookDetailsView : MvpView {
 
     fun displayBook(book: BookDto)
 
-    fun showError(errorMsg: String)
+    fun showError(errorMsg: String?)
 
     fun cleanError()
 

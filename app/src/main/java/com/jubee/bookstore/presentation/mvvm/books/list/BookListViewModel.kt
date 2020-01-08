@@ -5,11 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jubee.bookstore.domain.Failure
+import com.jubee.bookstore.domain.Result
 import com.jubee.bookstore.domain.Success
 import com.jubee.bookstore.domain.usecase.BookListUseCase
 import com.jubee.bookstore.dto.BookDto
 import com.jubee.bookstore.presentation.ErrorPresence
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -40,12 +42,19 @@ class BookListViewModel @Inject constructor(private val bookListUseCase: BookLis
         _isLoadingLiveData.value = true
         _errorPresenceLiveData.value = ErrorPresence(false)
         this.viewModelScope.launch(Dispatchers.Main) {
-            when (val result = bookListUseCase.getBookList()) {
-                is Success -> _booksLiveData.value = result.data
-                is Failure -> _errorPresenceLiveData.value =
-                    ErrorPresence(true, "Load books failed. " + result.errorMsg)
+            bookListUseCase.getBookList().collect {
+                displayBookListResult(it)
+
             }
             _isLoadingLiveData.value = false
+        }
+    }
+
+    private fun displayBookListResult(result: Result<List<BookDto>>) {
+        when (result) {
+            is Success -> _booksLiveData.value = result.data
+            is Failure -> _errorPresenceLiveData.value =
+                ErrorPresence(true, "Load books failed. " + result.error.message)
         }
     }
 

@@ -27,7 +27,7 @@ class BookDetailsPresenter @Inject constructor(private val bookDetailsUseCase: B
         viewState.cleanError()
         when (val result = bookDetailsUseCase.getBookDetails(bookId)) {
             is Success -> viewState.displayBook(result.data)
-            is Failure -> viewState.showError(result.errorMsg)
+            is Failure -> viewState.showError(result.error.message)
         }
         viewState.stopLoadProgress()
     }

@@ -40,7 +40,7 @@ class BookDetailsViewModel(private val bookDetailsUseCase: BookDetailsUseCase) :
         this.viewModelScope.launch(Dispatchers.Main) {
             when (val result = bookDetailsUseCase.getBookDetails(bookId)) {
                 is Success -> _bookLiveData.value = result.data
-                is Failure -> _errorPresenceLiveData.value = ErrorPresence(true, result.errorMsg)
+                is Failure -> _errorPresenceLiveData.value = ErrorPresence(true, result.error.message)
             }
         }
         _isLoadingLiveData.value = false

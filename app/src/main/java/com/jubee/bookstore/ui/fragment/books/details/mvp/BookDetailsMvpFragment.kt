@@ -45,7 +45,7 @@ class BookDetailsMvpFragment : AbstractFragment<BookDetailsPresenter>(), BookDet
         binding.book = book
     }
 
-    override fun showError(errorMsg: String) {
+    override fun showError(errorMsg: String?) {
         binding.error = ErrorPresence(true, errorMsg)
     }
 
