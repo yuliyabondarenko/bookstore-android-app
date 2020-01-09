@@ -1,9 +1,6 @@
 package com.jubee.bookstore.ui.fragment.books.transition
 
-import android.transition.ChangeBounds
-import android.transition.ChangeImageTransform
-import android.transition.ChangeTransform
-import android.transition.TransitionSet
+import android.transition.*
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -11,11 +8,15 @@ import kotlinx.android.synthetic.main.fragment_book_details.view.*
 
 
 fun FragmentTransaction.setUpTransition(
-    fragment: Fragment,
+    parentFragment: Fragment,
+    childFragment: Fragment,
     id: Long,
     itemView: View
 ): FragmentTransaction {
-    fragment.sharedElementEnterTransition = DetailsTransition()
+    parentFragment.exitTransition = Fade()
+
+    childFragment.sharedElementEnterTransition = DetailsTransition()
+    childFragment.enterTransition = Fade()
 
     val nameView = itemView.bookName.apply { transitionName = "bookName$id" }
     val imageView = itemView.bookImage.apply { transitionName = "bookImage$id" }
@@ -38,5 +39,6 @@ class DetailsTransition : TransitionSet() {
         addTransition(ChangeBounds())
         addTransition(ChangeTransform())
         addTransition(ChangeImageTransform())
+        addTransition(ChangeClipBounds())
     }
 }

@@ -71,15 +71,15 @@ class BookListMvpFragment : AbstractFragment<BookListPresenter>(), BookListView 
     }
 
     private fun bookItemClicked(bookItem: BookDto, itemView: View) {
-        val fragment = BookDetailsMvpFragment().apply {
+        val detailsFragment = BookDetailsMvpFragment().apply {
             arguments = Bundle().apply { putLong(BOOK_ID_EXTRA, bookItem.id) }
         }
 
         activity!!.supportFragmentManager
             .beginTransaction()
-            .replace(R.id.mainFragmentContainer, fragment)
+            .replace(R.id.mainFragmentContainer, detailsFragment)
             .addToBackStack(null)
-            .setUpTransition(fragment, bookItem.id, itemView)
+            .setUpTransition(this, detailsFragment, bookItem.id, itemView)
             .commit()
     }
 }
