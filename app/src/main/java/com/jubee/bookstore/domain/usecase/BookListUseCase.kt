@@ -18,7 +18,9 @@ class BookListUseCase @Inject constructor(
 
     fun getBookList(): Flow<Result<List<BookDto>>> = flow {
         val booksLocal = getLocal()
-        emit(booksLocal)
+        if(booksLocal is Success) {
+            emit(booksLocal)
+        }
         val booksRemote = getRemote()
         if (booksRemote is Success) {
             updateLocal(booksRemote.data)
