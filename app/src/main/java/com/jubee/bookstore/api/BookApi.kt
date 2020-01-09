@@ -8,7 +8,7 @@ import retrofit2.http.Query
 interface BookApi {
     @GET("books")
     suspend fun getBookList(
-        @Query("sort") sort: String? = "price,desc",
+        @Query("sort") sort: String? = null, //example "price,desc"
         @Query("size") size: Int? = null,
         @Query("page") page: Int? = null
     ): BookCollectionApiResponse

@@ -10,7 +10,7 @@ import com.jubee.bookstore.dto.BookDto
 
 
 class BookAdapter(
-    val clickListener: (BookDto) -> Unit
+    val clickListener: (bookDto: BookDto, itemView: View) -> Unit
 ) :
     RecyclerView.Adapter<BookAdapter.BookItemViewHolder>() {
 
@@ -32,7 +32,7 @@ class BookAdapter(
         val bookItem = books[position]
         holder.binding.book = bookItem
         Glide.with(holder.itemView).load(bookItem.photo).into(holder.binding.bookImage)
-        holder.itemView.setOnClickListener { clickListener(bookItem) }
+        holder.itemView.setOnClickListener { clickListener(bookItem, holder.itemView) }
     }
 
     inner class BookItemViewHolder(v: View, val binding: BookListItemBinding) :
