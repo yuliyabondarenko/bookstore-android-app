@@ -4,7 +4,7 @@ import moxy.MvpAppCompatFragment
 import javax.inject.Inject
 import javax.inject.Provider
 
-abstract class AbstractFragment<T>  : MvpAppCompatFragment() {
+abstract class AbstractMvpFragment<T>  : MvpAppCompatFragment() {
 
     @Inject
     internal lateinit var presenterProvider: Provider<T>

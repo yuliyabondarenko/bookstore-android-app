@@ -7,4 +7,5 @@
     <string name="book_list_mvvm">Book list MVVM</string>
     <string name="book_list_mvp">Book list MVP</string>
     <string name="fragments_menu_group">Fragments</string>
+    <string name="shopping_cart">Shopping Cart</string>
 </resources>

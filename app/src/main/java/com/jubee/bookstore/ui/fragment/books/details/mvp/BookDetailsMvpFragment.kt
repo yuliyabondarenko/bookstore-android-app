@@ -12,12 +12,12 @@ import com.jubee.bookstore.dto.BookDto
 import com.jubee.bookstore.presentation.ErrorPresence
 import com.jubee.bookstore.presentation.mvp.books.details.BookDetailsPresenter
 import com.jubee.bookstore.presentation.mvp.books.details.view.BookDetailsView
-import com.jubee.bookstore.ui.fragment.AbstractFragment
+import com.jubee.bookstore.ui.fragment.AbstractMvpFragment
 import com.jubee.bookstore.ui.fragment.books.list.mvvm.BOOK_ID_EXTRA
 import moxy.ktx.moxyPresenter
 
 
-class BookDetailsMvpFragment : AbstractFragment<BookDetailsPresenter>(), BookDetailsView {
+class BookDetailsMvpFragment : AbstractMvpFragment<BookDetailsPresenter>(), BookDetailsView {
 
     private val presenter by moxyPresenter {
         val bookId = this.arguments!!.getLong(BOOK_ID_EXTRA)

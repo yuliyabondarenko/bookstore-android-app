@@ -9,6 +9,7 @@ import com.jubee.bookstore.R
 import com.jubee.bookstore.app.BookstoreApplication
 import com.jubee.bookstore.ui.fragment.books.list.mvp.BookListMvpFragment
 import com.jubee.bookstore.ui.fragment.books.list.mvvm.BookListMvvmFragment
+import com.jubee.bookstore.ui.fragment.shoppingcart.ShoppingCartFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -21,21 +22,24 @@ class MainActivity : FragmentActivity(), NavigationView.OnNavigationItemSelected
 
         navigationView.setNavigationItemSelectedListener(this)
 
-        displayFragment(BookListMvvmFragment())
+        displayFragment(BookListMvvmFragment(), false)
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.bookListMvvm -> displayFragment(BookListMvvmFragment())
-            R.id.bookListMvp -> displayFragment(BookListMvpFragment())
+            R.id.menuBookListMvvm -> displayFragment(BookListMvvmFragment())
+            R.id.menuBookListMvp -> displayFragment(BookListMvpFragment())
+            R.id.menuShoppingCart -> displayFragment(ShoppingCartFragment())
         }
         return super.onOptionsItemSelected(item)
     }
 
-    private fun displayFragment(fragment: Fragment) {
-        val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.mainFragmentContainer, fragment)
-        fragmentTransaction.commit()
+    private fun displayFragment(fragment: Fragment, addToBackStack: Boolean = true) {
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.mainFragmentContainer, fragment)
+        if (addToBackStack)
+            transaction.addToBackStack(null)
+        transaction.commit()
 
         drawer.closeDrawers();
     }

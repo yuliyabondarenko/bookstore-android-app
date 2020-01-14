@@ -16,13 +16,13 @@ import com.jubee.bookstore.presentation.mvp.books.list.BookListPresenter
 import com.jubee.bookstore.presentation.mvp.books.list.view.BookListView
 import com.jubee.bookstore.ui.fragment.books.details.mvp.BookDetailsMvpFragment
 import com.jubee.bookstore.ui.adapter.BookAdapter
-import com.jubee.bookstore.ui.fragment.AbstractFragment
+import com.jubee.bookstore.ui.fragment.AbstractMvpFragment
 import com.jubee.bookstore.ui.fragment.books.list.mvvm.BOOK_ID_EXTRA
 import com.jubee.bookstore.ui.fragment.books.transition.setUpTransition
 import moxy.ktx.moxyPresenter
 
 
-class BookListMvpFragment : AbstractFragment<BookListPresenter>(), BookListView {
+class BookListMvpFragment : AbstractMvpFragment<BookListPresenter>(), BookListView {
 
     private val presenter by moxyPresenter { presenterProvider.get() }
 

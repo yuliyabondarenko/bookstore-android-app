@@ -4,11 +4,14 @@
         <menu>
             <group android:checkableBehavior="single">
                 <item
-                    android:id="@+id/bookListMvvm"
+                    android:id="@+id/menuBookListMvvm"
                     android:title="@string/book_list_mvvm" />
                 <item
-                    android:id="@+id/bookListMvp"
+                    android:id="@+id/menuBookListMvp"
                     android:title="@string/book_list_mvp" />
+                <item
+                    android:id="@+id/menuShoppingCart"
+                    android:title="@string/shopping_cart" />
             </group>
         </menu>
     </item>
