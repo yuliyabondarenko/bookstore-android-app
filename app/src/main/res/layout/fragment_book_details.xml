@@ -20,35 +20,10 @@
             type="com.jubee.bookstore.presentation.ErrorPresence" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="@{isLoading ? View.VISIBLE : View.GONE}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:visibility="visible" />
-
-        <TextView
-            android:id="@+id/errorMsgView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:text="@{error.errorMsg}"
-            android:textColor="@android:color/holo_red_light"
-            android:textSize="18sp"
-            android:visibility="@{error.isPresent ? View.VISIBLE : View.GONE}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="@string/common_error_msg"
-            tools:visibility="visible" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/bookName"
@@ -59,90 +34,68 @@
             android:textAlignment="center"
             android:textSize="24sp"
             android:transitionName="bookName"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/errorMsgView"
             tools:text="dorian gray" />
 
         <ImageView
             android:id="@+id/bookImage"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_weight="2"
             android:adjustViewBounds="true"
             android:contentDescription="@string/book_image_description"
             android:paddingBottom="8dp"
             android:transitionName="bookImage"
             app:imageUrl="@{book.photo}"
-            app:layout_constraintBottom_toTopOf="@id/addButton"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bookName"
             tools:src="@drawable/ic_launcher_background" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.5" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/horizontalGuideline95"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.95" />
+            <TextView
+                android:id="@+id/bookPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_weight="1"
+                android:background="@android:color/holo_orange_light"
+                android:padding="8dp"
+                android:text="@{'$' +String.valueOf(book.price)}"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:transitionName="bookPrice"
+                tools:text="$56.98" />
 
-        <TextView
-            android:id="@+id/bookPrice"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:background="@android:color/holo_orange_light"
-            android:padding="8dp"
-            android:text="@{'$' +String.valueOf(book.price)}"
-            android:textAlignment="center"
-            android:textSize="18sp"
-            android:transitionName="bookPrice"
-            app:layout_constraintBottom_toBottomOf="@+id/addButton"
-            app:layout_constraintEnd_toStartOf="@+id/guideline"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/addButton"
-            tools:text="$56.98" />
+            <Button
+                android:id="@+id/addButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_weight="1"
+                android:background="@color/colorAccent"
+                android:text="@string/add_to_cart"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:transitionName="addButton"
+                android:visibility="@{book.absent ? View.VISIBLE : View.GONE}"
+                tools:visibility="visible" />
 
-        <Button
-            android:id="@+id/addButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:background="@color/colorAccent"
-            android:text="@string/add_to_cart"
-            android:textAlignment="center"
-            android:textSize="18sp"
-            android:transitionName="addButton"
-            android:visibility="@{book.absent ? View.VISIBLE : View.INVISIBLE}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/guideline" />
-
-        <TextView
-            android:id="@+id/bookAbsent"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:background="@android:color/darker_gray"
-            android:padding="8dp"
-            android:text="@string/absent"
-            android:textAlignment="center"
-            android:textSize="18sp"
-            android:transitionName="bookAbsent"
-            android:visibility="@{book.absent ? View.GONE : View.VISIBLE}"
-            app:layout_constraintBottom_toBottomOf="@+id/bookPrice"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/guideline"
-            app:layout_constraintTop_toTopOf="@+id/bookPrice" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/bookAbsent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_weight="1"
+                android:background="@android:color/darker_gray"
+                android:padding="8dp"
+                android:text="@string/absent"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:transitionName="bookAbsent"
+                android:visibility="@{book.absent ? View.GONE : View.VISIBLE}"
+                tools:visibility="gone" />
+        </LinearLayout>
+    </LinearLayout>
 </layout>
