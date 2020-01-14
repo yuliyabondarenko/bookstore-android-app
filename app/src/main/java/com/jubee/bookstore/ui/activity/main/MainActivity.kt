@@ -9,7 +9,7 @@ import com.jubee.bookstore.R
 import com.jubee.bookstore.app.BookstoreApplication
 import com.jubee.bookstore.ui.fragment.books.list.mvp.BookListMvpFragment
 import com.jubee.bookstore.ui.fragment.books.list.mvvm.BookListMvvmFragment
-import com.jubee.bookstore.ui.fragment.shoppingcart.ShoppingCartFragment
+import com.jubee.bookstore.ui.fragment.shoppingcart.ShoppingCartMvpFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -29,7 +29,7 @@ class MainActivity : FragmentActivity(), NavigationView.OnNavigationItemSelected
         when (item.itemId) {
             R.id.menuBookListMvvm -> displayFragment(BookListMvvmFragment())
             R.id.menuBookListMvp -> displayFragment(BookListMvpFragment())
-            R.id.menuShoppingCart -> displayFragment(ShoppingCartFragment())
+            R.id.menuShoppingCart -> displayFragment(ShoppingCartMvpFragment())
         }
         return super.onOptionsItemSelected(item)
     }

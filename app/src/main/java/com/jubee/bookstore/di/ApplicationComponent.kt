@@ -8,6 +8,7 @@ import com.jubee.bookstore.ui.fragment.books.details.mvp.BookDetailsMvpFragment
 import com.jubee.bookstore.ui.fragment.books.details.mvvm.BookDetailsMvvmFragment
 import com.jubee.bookstore.ui.fragment.books.list.mvp.BookListMvpFragment
 import com.jubee.bookstore.ui.fragment.books.list.mvvm.BookListMvvmFragment
+import com.jubee.bookstore.ui.fragment.shoppingcart.ShoppingCartMvpFragment
 import dagger.Component
 import javax.inject.Singleton
 
@@ -25,4 +26,5 @@ interface ApplicationComponent {
     fun inject(fragment: BookListMvpFragment)
     fun inject(fragment: BookDetailsMvpFragment)
     fun inject(fragment: BookDetailsMvvmFragment)
+    fun inject(fragment: ShoppingCartMvpFragment)
 }

@@ -62,7 +62,7 @@ class BookListMvpFragment : AbstractMvpFragment<BookListPresenter>(), BookListVi
         adapter.books = books.toMutableList()
     }
 
-    override fun showError(errorMsg: String) {
+    override fun showError(errorMsg: String?) {
         binding.error = ErrorPresence(true, errorMsg)
     }
 
