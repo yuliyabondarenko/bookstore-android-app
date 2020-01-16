@@ -42,24 +42,20 @@ class ShoppingCartMvpFragment : AbstractMvpFragment<ShoppingCartPresenter>(), Sh
     }
 
 
-    override fun displayShoppingCart(shoppingCartItems: List<ShoppingCartItem>) {
-        binding.shoppingCart = ShoppingCart()
+    override fun displayShoppingCart(shoppingCart: ShoppingCart) {
+        binding.shoppingCart = shoppingCart
     }
 
     override fun showError(errorMsg: String?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun cleanError() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun startLoadProgress() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun stopLoadProgress() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
 

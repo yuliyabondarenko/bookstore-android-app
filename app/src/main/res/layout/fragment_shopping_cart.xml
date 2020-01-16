@@ -22,7 +22,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textColor="@color/colorAccent"
-        android:text="This is ShoppingCart Fragment" />
+        android:text="@{'$' +String.valueOf(shoppingCart.totalСost)}"
+        android:textColor="@color/colorAccent" />
 
 </layout>
